@@ -1,0 +1,538 @@
+%
+% exemplo genérico de uso da classe iiufrgs.cls
+% $Id: iiufrgs.tex,v 1.1.1.1 2005/01/18 23:54:42 avila Exp $
+%
+% This is an example file and is hereby explicitly put in the
+% public domain.
+%
+\documentclass[ecp,tc]{iiufrgs}
+% Para usar o modelo, deve-se informar o programa e o tipo de documento.
+% Programas :
+%   * cic       -- Graduação em Ciência da Computação
+%   * ecp       -- Graduação em Ciência da Computação
+%   * ppgc      -- Programa de Pós Graduação em Computação
+%   * pgmigro   -- Programa de Pós Graduação em Microeletrônica
+%   
+% Tipos de Documento:
+%   * tc                -- Trabalhos de Conclusão (apenas cic e ecp)
+%   * diss ou mestrado  -- Dissertações de Mestrado (ppgc e pgmicro)
+%   * tese ou doutorado -- Teses de Doutorado (ppgc e pgmicro)
+%   * ti                -- Trabalho Individual (ppgc e pgmicro)
+% 
+% Outras Opções:
+%   * english    -- para textos em inglês
+%   * openright  -- Força início de capítulos em páginas ímpares (padrão da
+%                   biblioteca)
+%   * oneside    -- Desliga frente-e-verso
+%   * nominatalocal -- Lê os dados da nominata do arquivo nominatalocal.def
+
+
+% Use unicode
+\usepackage[utf8]{inputenc}   % pacote para acentuação
+
+% Necessário para incluir figuras
+\usepackage{graphicx}           % pacote para importar figuras
+
+
+\usepackage{times}              % pacote para usar fonte Adobe Times
+
+\usepackage{amsmath}
+% \usepackage{palatino}
+% \usepackage{mathptmx}          % p/ usar fonte Adobe Times nas fórmulas
+
+\usepackage[alf,abnt-emphasize=bf]{abntex2cite}	% pacote para usar citações abnt
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+%
+% Informações gerais
+%
+\title{Sistema de Baixo Custo para Detecção de Vagas de Estacionamento por Visão Computacional}
+
+\author{Pospichil}{Bruno Meybom}
+% alguns documentos podem ter varios autores:
+%\author{Flaumann}{Frida Gutenberg}
+%\author{Flaumann}{Klaus Gutenberg}
+
+% orientador e co-orientador são opcionais (não diga isso pra eles :))
+\advisor[Prof.~Dr.]{Jung}{Claudio Rosito}
+%\coadvisor[Prof.~Dr.]{Knuth}{Donald Ervin}
+
+% a data deve ser a da defesa; se nao especificada, são gerados
+% mes e ano correntes
+\date{julho}{2015}
+
+% o local de realização do trabalho pode ser especificado (ex. para TCs)
+% com o comando \location:
+\location{Porto Alegre}{RS}
+
+% itens individuais da nominata podem ser redefinidos com os comandos
+% abaixo:
+% \renewcommand{\nominataReit}{Prof\textsuperscript{a}.~Wrana Maria Panizzi}
+% \renewcommand{\nominataReitname}{Reitora}
+% \renewcommand{\nominataPRE}{Prof.~Jos{\'e} Carlos Ferraz Hennemann}
+% \renewcommand{\nominataPREname}{Pr{\'o}-Reitor de Ensino}
+% \renewcommand{\nominataPRAPG}{Prof\textsuperscript{a}.~Joc{\'e}lia Grazia}
+% \renewcommand{\nominataPRAPGname}{Pr{\'o}-Reitora Adjunta de P{\'o}s-Gradua{\c{c}}{\~a}o}
+% \renewcommand{\nominataDir}{Prof.~Philippe Olivier Alexandre Navaux}
+% \renewcommand{\nominataDirname}{Diretor do Instituto de Inform{\'a}tica}
+% \renewcommand{\nominataCoord}{Prof.~Carlos Alberto Heuser}
+% \renewcommand{\nominataCoordname}{Coordenador do PPGC}
+% \renewcommand{\nominataBibchefe}{Beatriz Regina Bastos Haro}
+% \renewcommand{\nominataBibchefename}{Bibliotec{\'a}ria-chefe do Instituto de Inform{\'a}tica}
+% \renewcommand{\nominataChefeINA}{Prof.~Jos{\'e} Valdeni de Lima}
+% \renewcommand{\nominataChefeINAname}{Chefe do \deptINA}
+% \renewcommand{\nominataChefeINT}{Prof.~Leila Ribeiro}
+% \renewcommand{\nominataChefeINTname}{Chefe do \deptINT}
+
+% A seguir são apresentados comandos específicos para alguns
+% tipos de documentos.
+
+% Relatório de Pesquisa [rp]:
+% \rp{123}             % numero do rp
+% \financ{CNPq, CAPES} % orgaos financiadores
+
+% Trabalho Individual [ti]:
+% \ti{123}     % numero do TI
+% \ti[II]{456} % no caso de ser o segundo TI
+
+% Monografias de Especialização [espec]:
+% \espec{Redes e Sistemas Distribuídos}      % nome do curso
+% \coord[Profa.~Dra.]{Weber}{Taisy da Silva} % coordenador do curso
+% \dept{INA}                                 % departamento relacionado
+
+%
+% palavras-chave
+% iniciar todas com letras minúsculas, exceto no caso de abreviaturas
+%
+\keyword{formatação eletrônica de documentos}
+\keyword{\LaTeX}
+\keyword{ABNT}
+\keyword{UFRGS}
+
+%
+% inicio do documento
+%
+\begin{document}
+
+% folha de rosto
+% às vezes é necessário redefinir algum comando logo antes de produzir
+% a folha de rosto:
+% \renewcommand{\coordname}{Coordenadora do Curso}
+\maketitle
+
+% dedicatoria
+\clearpage
+\begin{flushright}
+\mbox{}\vfill
+{\sffamily\itshape
+``If I have seen farther than others,\\
+it is because I stood on the shoulders of giants.''\\}
+--- \textsc{Sir~Isaac Newton}
+\end{flushright}
+
+% agradecimentos
+\chapter*{Agradecimentos}
+Agradeço ao \LaTeX\ por não ter vírus de macro\ldots
+
+
+
+% resumo na língua do documento
+\begin{abstract}
+Este documento é um exemplo de como formatar documentos para o
+Instituto de Informática da UFRGS usando as classes \LaTeX\
+disponibilizadas pelo UTUG\@. Ao mesmo tempo, pode servir de consulta
+para comandos mais genéricos. \emph{O texto do resumo não deve
+conter mais do que 500 palavras.}
+\end{abstract}
+
+% resumo na outra língua
+% como parametros devem ser passados o titulo e as palavras-chave
+% na outra língua, separadas por vírgulas
+\begin{englishabstract}{Using \LaTeX\ to Prepare Documents at II/UFRGS}{Electronic document preparation, \LaTeX, ABNT, UFRGS}
+This document is an example on how to prepare documents at II/UFRGS
+using the \LaTeX\ classes provided by the UTUG\@. At the same time, it
+may serve as a guide for general-purpose commands. \emph{The text in
+the abstract should not contain more than 500~words.}
+\end{englishabstract}
+
+% lista de abreviaturas e siglas
+% o parametro deve ser a abreviatura mais longa
+\begin{listofabbrv}{SPMD}
+        \item[DLT] Direct Linear Transform
+        \item[CV] Computer Vision
+  
+\end{listofabbrv}
+
+% idem para a lista de símbolos
+%\begin{listofsymbols}{$\alpha\beta\pi\omega$}
+%       \item[$\sum{\frac{a}{b}}$] Somatório do produtório
+%       \item[$\alpha\beta\pi\omega$] Fator de inconstância do resultado
+%\end{listofsymbols}
+
+% lista de figuras
+\listoffigures
+
+% lista de tabelas
+\listoftables
+
+% sumario
+\tableofcontents
+
+% aqui comeca o texto propriamente dito
+
+% introducao
+\chapter{Introdução}
+No início dos tempos, Donald E. Knuth criou o \TeX. Algum tempo depois, Leslie Lamport criou o \LaTeX. Graças a eles, não somos obrigados a usar o Word nem o LibreOffice.
+
+\chapter{Fundamentação Teórica e Trabalhos Relacionados}
+
+\section{Modelos de Câmeras}
+
+\subsection{Câmera Esteonopeica (\textit{pinhole})}
+O  modelo  de  câmera  estenopeica  é  o  mais  simples  existente,  proposto  por  Filippo Brunelleschi, no início do século XV, é matematicamente conveniente e, apesar de sua simplicidade, provê uma aproximação aceitável do processo de captura de imagem.
+
+Imagine uma caixa, aonde existe um pequeno furo (do grego \textit{stenopo}, por isso estenopeica) no centro de uma das faces e sua face oposta sendo substituída por uma superfície translúcida. Se você colocar essa caixa em uma sala com pouca iluminação, com alguma fonte luminosa em frente à superfície com o furo, a imagem dessa fonte luminosa será exibida invertida na face translúcida, conforme pode ser visto na Figura~\ref{fig:image1}.
+
+\begin{figure}
+\centering
+\caption{Modelo de câmera estenopeica}
+\includegraphics{../../../Dropbox/__TG1/_images/image1}
+\label{fig:image1}
+\legend{Fonte: Forsyth}
+\end{figure}
+
+Esse modelo define um mapeamento geométrico do mundo 3D para o plano de imagem 2D, conhecido como projeção perspectiva, que cria uma imagem invertida e, as vezes é conveniente se pensar numa imagem virtual, criada em um plano entre a face contendo o furo e a imagem original, à mesma distância entre essa mesma face e o plano da imagem. Conforme o contexto, pode ser útil pensar na imagem virtual ou na real.
+
+A projeção em perspectiva gera alguns efeitos na imagem projetada: o tamanho aparente dos objetos depende da sua distância, os mais distantes parecem menores do que os mais próximos.
+
+\begin{figure}
+	\centering
+	\caption{Distorção de tamanho}
+	\includegraphics{../../../Dropbox/__TG1/_images/image2}
+	\label{fig:image2}
+	\legend{Fonte: Forsyth}
+\end{figure}
+
+Outro efeito gerado na projeção de imagem é que duas retas paralelas no mundo, isso é, cuja intersecção ocorreria em uma distância infinita, se intersectem no horizonte da imagem. Tais coordenadas da intersecção na imagem são chamados pontos de fuga (\textit{vanishing points}). O conjunto dos pontos de fuga correspondentes a retas paralelas em um plano formam uma reta, conhecida como reta de fuga (\textit{vanishing line}).
+
+\begin{figure}
+	\centering
+	\caption{Retas de fuga}
+	\includegraphics{../../../Dropbox/__TG1/_images/image3}
+	\label{fig:image3}
+	\legend{Fonte: Hartley}
+\end{figure}
+
+\subsection{Parâmetros de Câmeras}
+Definimos como parâmetros de câmera as informações que são responsáveis pelo mapeamento de uma cena do mundo 3D para o plano da imagem 2D e entendemos por calibração de câmera a obtenção desses parâmetros. Os parâmetros são divididos em dois grupos: os \textbf{intrínsecos}, que modelam as características e configurações das lentes, do sensor e a geometria e montagem da câmera, e os \textbf{extrínsecos}, que modelam a pose (posicionamento e orientação da câmera no espaço).
+
+\subsubsection{Parâmetros Intrínsecos}
+
+\begin{figure}
+	\centering
+	\caption{Modelo de câmera estenopeica}
+	\includegraphics{../../../Dropbox/__TG1/_images/image4}
+	\label{fig:image4}
+	\legend{Fonte: Hartley}
+\end{figure}
+
+Consideremos o modelo representado na Figura~\ref{fig:image4}, aonde \texttt{C} representa o centro de projeção, também conhecido como centro da câmera ou centro óptico. Vamos definir um sistema de coordenadas onde \texttt{C} seja a origem, e consideraremos o plano \texttt{Z = f}, que é conhecido como plano da imagem ou plano focal e está posicionado em frente ao centro de projeção e \texttt{f} é a distância focal. A linha que passa pelo centro da câmera e é perpendicular ao plano da imagem é chamada de eixo principal ou eixo óptico e o ponto onde esse eixo encontra o plano da imagem é conhecido como ponto principal (\texttt{p}).
+
+A partir da Figura~\ref{fig:image4}, temos que um ponto no espaço de coordenadas $(X, Y, Z)^T$ é mapeado, por semelhança de triângulos, para um ponto no plano da imagem $ (f\dfrac{X}{Z}, f\dfrac{Y}{Z}) $.
+Suprimindo a coordenada final da imagem, temos que $ (X, Y, Z)^T \mapsto (f\dfrac{X}{Z}, f\dfrac{Y}{Z})^T $ descreve  a  projeção  de  pontos  do  mundo  para  coordenadas  da  imagem.  Isso  é, mapeando de um espaço 3D para um 2D.
+
+Se o mundo e os pontos da imagem são representados por vetores homogêneos, então, a projeção é facilmente expressada como uma relação linear de suas coordenadas homogêneas. A equação anterior pode ser escrita como uma multiplicação matricial:
+
+\[\begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \mapsto \begin{pmatrix} fX \\ fY \\ fZ \end{pmatrix} = \begin{bmatrix} f &  &  & 0 \\ & f & & 0 \\ & & 1 & 0 \end{bmatrix} \begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \]
+
+Na matriz acima, assumimos que a origem das coordenadas no plano da imagem é o ponto principal. No entanto, isso pode não ser verdade, por isso, podemos considerar que $ (X, Y, Z)^T \mapsto (f\dfrac{X}{Z} + p_x, f\dfrac{Y}{Z} + p_y)^T $ aonde $ (p_x, p_y)^T $ são as coordenadas do ponto principal, conforme a figura~\ref{fig:image5}.
+
+\begin{figure}
+	\centering
+	\caption{Sistema de coordenadas da imagem e da câmera}
+	\includegraphics{../../../Dropbox/__TG1/_images/image5}
+	\label{fig:image5}
+	\legend{Fonte: Hartley}
+\end{figure}
+
+Assim, podemos escrever a equação em coordenadas homogêneas, chegando a
+\[\begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \mapsto \begin{pmatrix} fX+Zp_x \\ fY+Zp_y \\ fZ \end{pmatrix} = \begin{bmatrix} f &  & p_x & 0 \\ & f & p_y & 0 \\ & & 1 & 0 \end{bmatrix} \begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \]
+aonde definimos
+\[K = \begin{bmatrix} f &  & p_x & 0 \\ & f & p_y & 0 \\ & & 1 & 0 \end{bmatrix}\]
+ou, na forma concisa: $ x = K[I|0]x_{cam}$.
+
+A matriz $ K $ é conhecida como \textit{matriz de calibração de câmera}. Na forma concisa, assumimos que a câmera estará posicionada na origem do sistema de coordenadas, com o eixo principal apontando para fora do eixo $ x $ e o ponto $ x_{cam} $ é definido nesse sistema de coordenadas.
+
+\subsubsection{Parâmetros Extrínsecos}
+\label{sec:extrinsic}
+Os parâmetros extrínsecos relacionam o sistema de coordenadas da câmera com o do mundo. Os dois sistemas de coordenadas se relacionam por rotação e translação, conforme pode ser visto na figura~\ref{fig:image6}
+
+\begin{figure}
+	\centering
+	\caption{Transformação entre o sistema de coordenadas da câmera e do mundo}
+	\includegraphics{../../../Dropbox/__TG1/_images/image6}
+	\label{fig:image6}
+	\legend{Fonte: Hartley}
+\end{figure}
+
+Sendo $ \widetilde{X} $ um vetor não homogêneo representando um ponto no sistema de coordenadas do mundo e $ \widetilde{X}_{cam} $ representando o mesmo ponto no sistema de coordenadas da câmera, podemos escrever $ \widetilde{X}_{cam} = R(\widetilde{X} - \widetilde{C}) $ , aonde $ \widetilde{C} $ representa as coordenadas do centro da câmera no sistema de coordenadas do mundo e R é uma matriz $ 3 \times 3 $ representando a orientação do sistema de coordenadas da câmera, ou seja:
+\[ X_{cam} =
+\begin{bmatrix} R & -R\widetilde{C} \\ 
+0 & 1 \end{bmatrix}
+\begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} =
+\begin{bmatrix} R & -R\widetilde{C} \\ 
+0 & 1 \end{bmatrix}
+\textbf{X}  \]
+
+Que, por sua vez, unindo com a matriz de calibração da câmera, temos que \[x = KR[I|-\widetilde{C}]\textbf{X} \] onde \textbf{X} é dado no sistema de coordenadas do mundo.
+
+Vemos que em uma câmera estenopeica $ P = KR[I|-\widetilde{C}] $ temos nove graus de liberdade: três para $ K(f, p_x, p_y) $, três para $ R $ e três para $ \widetilde{C} $. Os parâmetros de $K$ são conhecidos como \textit{parâmetros internos da câmera}, os
+parâmetros $R$ e $\widetilde{C}$ relacionam a orientação da câmera e sua posição no sistema de coordenadas do mundo e são chamados \textit{parâmetros externos}.
+
+Alem disso, pode ser útil deixar o centro da câmera como variável implícita. representando a transformação do sistema de coordenadas do mundo para a imagem como $ X_{cam} = R\widetilde{X} + t $. Nesse caso, a matriz da câmera se torna $ x = K[R|t] $, aonde $ t = -R\widetilde{C} $.
+
+\subsubsection{Imperfeições de Lentes}
+
+Os parâmetros intrínsecos e extrínsecos descritos anteriormente fornecem a descrição do processo de formação de imagem em uma câmera estenopeica, no entanto, ao lidarmos com câmeras de lente reais, encontramos algumas distorções que não foram previstas
+até aqui. Considerando que estas são geradas pelo processo construtivo da lente, podemos considerá-las como um tipo específico de parâmetros intrínsecos.
+
+De acordo com Hartley e Zisserman (2004), a modelagem exata das lentes é uma tarefa complexa, sendo que dessas imperfeições, a distorção radial (ou distorção barril) é a mais relevante em ser corrigida. Essa distorção provoca que uma reta no sistema de coordenadas do mundo seja projetada com uma curvatura no plano da imagem.
+
+Estamos fazer.
+
+
+\begin{figure}
+	\centering
+	\caption{Distorção radial}
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{../../../Dropbox/__TG1/_images/image7a}
+		\caption{Mapa de pixeis sem distorção}
+		\label{fig:image7a}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{../../../Dropbox/__TG1/_images/image7b}
+		\caption{Imagem com distorção radial}
+		\label{fig:image7b}
+	\end{subfigure}
+	\label{fig:image7}
+	\legend{Fonte: Morvan}
+\end{figure}
+
+De acordo com Morvan (2009), a relação entre a posição dos pixeis na imagem distorcida $ (x_d, y_d)^T $ e a imagem corrigida $ (x_u, y_u)^T $ é definida por
+\[ \begin{bmatrix}x_u - p_x \\ y_u - p_y \end{bmatrix} = L(r_d)\begin{bmatrix}x_d - p_x \\ y_d - p_y \end{bmatrix}\]
+onde $ (p_x, p_y)^T $ são as coordenadas do ponto principal e $ L(r_d) = 1+K_1{r_d}^2 $ em que $ k_1 $ é a quantidade de distorção radial presente na imagem e $ {r_d}^2 = (x_d - p_x)^2 + (y_d - p_x)^2 $.
+
+A correção da distorção radial passa por definirmos os parâmetros $ k_1 $ e $ (p_x, p_y)^T $. Podemos estimar esses valores pelo cálculo da curvatura de uma linha na imagem 2D que corresponde a uma reta no espaço de coordenadas do mundo (3D). Normalmente se utiliza um padrão de calibração (muitas vezes um tabuleiro de xadrez), que consiste de uma sequência de retas conhecidas em coordenadas do mundo e, por meio dos valores obtidos em coordenadas da imagem, é possível estimar sua distorção.
+
+\subsection{Calibração de Câmera}
+
+
+O processo de calibração de câmera consiste em se estabelecer os parâmetros intrínsecos e extrínsecos que caracterizam a projeção da imagem, isso é, uma câmera é dita calibrada quando o mapeamento entre as coordenadas da imagem e as direções  relativas ao centro da câmera são conhecidas.
+
+Isso nos conduz a definir uma série de valores (nesse caso, a matriz de calibração da câmera) que efetuam o mapeamento de um ponto no sistema de coordenadas do mundo real com um ponto na imagem, um dos algoritmos mais utilizados para fazer essa correspondência de pontos, é a Transformação Linear Direta ou DLT.
+
+\subsubsection{Transformação Linear Direta}
+
+No final da seção~\ref{sec:extrinsic} definimos a forma canônica da matriz de calibração de uma câmera estenopeica, se considerando apenas os parâmetros intrínsecos e extrínsecos (repare que a distorção ocasionada por imperfeições na lente utilizada não está sendo abordada nessa equação), que é $ P = KR[I|-\widetilde{C}] $ e que, por sua vez, admite como solução:
+
+\[
+P = \begin{bmatrix} f & & p_x \\ & f & p_y \\ & & 1 \end{bmatrix} [I|0] 
+\begin{bmatrix} R & -R\widetilde{C} \\ 0 & 1 \end{bmatrix} = 
+\begin{bmatrix} m_{11} & m_{12} & m_{13} & m_{14} \\ m_{21} & m_{22} & m_{23} & m_{24} \\ m_{31} & m_{32} & m_{33} & m_{34} \end{bmatrix}
+\]
+
+Em função disso as coordenadas da imagem e do mundo se relacionam por meio da matriz $ M $, ou seja,
+
+\[
+\begin{pmatrix} u_s \\ v_s \\ s \end{pmatrix} = \begin{bmatrix} m_{11} & m_{12} & m_{13} & m_{14} \\ m_{21} & m_{22} & m_{23} & m_{24} \\ m_{31} & m_{32} & m_{33} & m_{34} \end{bmatrix} \begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix}
+\]
+
+Onde $ \begin{pmatrix} X & Y & Z \end{pmatrix}^T $ representam coordenadas do mundo e $ \begin{pmatrix} u & v \end{pmatrix}^T $ coordenadas na imagem (pixeis).
+
+\[
+u = \dfrac{m_{11}X + m{12}Y + m_{13}Z + m_{14}}{m_{31}X + m{32}Y + m_{33}Z + m_{34}}
+\]
+\[
+v = \dfrac{m_{21}X + m{22}Y + m_{23}Z + m_{24}}{m_{31}X + m{32}Y + m_{33}Z + m_{34}}
+\]
+
+Assim, para cada conjunto de valores $ (u, v, X, Y, Z) $ obtemos duas equações, considerando que existem doze incógnitas na matriz, precisaremos de seus conjuntos de valores, gerando doze equações, assumindo que elas são linearmente independentes),
+chegando ao sistema de equações $ 12\times12 $.
+
+\setcounter{MaxMatrixCols}{20}
+
+\[
+\begin{bmatrix}
+X_1 & X_1 & X_1 & 1 & 0 & 0 & 0 & 0 & -u_1X_1 & -u_1Y_1 & -u_1Z_1 & -u_1 \\
+0 & 0 & 0 & 0 & X_1 & X_1 & X_1 & 1 & -v_1X_1 & -v_1Y_1 & -v_1Z_1 & -v_1 \\
+X_2 & X_2 & X_2 & 1 & 0 & 0 & 0 & 0 & -u_2X_2 & -u_2Y_2 & -u_2Z_2 & -u_2 \\
+0 & 0 & 0 & 0 & X_2 & X_2 & X_2 & 1 & -v_2X_2 & -v_2Y_2 & -v_2Z_2 & -v_2 \\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+X_n & X_n & X_n & 1 & 0 & 0 & 0 & 0 & -u_nX_n & -u_nY_n & -u_nZ_n & -u_n \\
+0 & 0 & 0 & 0 & X_n & X_n & X_n & 1 & -u_nX_n & -u_nY_n & -u_nZ_n & -v_n 
+\end{bmatrix}
+\begin{pmatrix}m_{11} \\ m_{12} \\ m_{13} \\ m_{14} \\ m_{21} \\ m_{22} \\ m_{23} \\ m_{24} \\ m_{31} \\ m_{32} \\ m_{33} \\ m_{34} \end{pmatrix} = 0
+\]
+
+Uma das características desse sistema é que múltiplos da matriz geram a mesma projeção, o que origina soluções diferentes da trivial no sistema acima. De fato, a solução trivial não é de interesse, pois gera uma matriz de projeção nula. Para obtermos uma solução diferente da trivial, é comum definirmos o valor de um dos parâmetros da matriz de projeção, comumente $ m_{34} = 1 $, fazendo com que o sistema se torne
+
+\[
+\begin{bmatrix}
+X_1 & X_1 & X_1 & 1 & 0 & 0 & 0 & 0 & -u_1X_1 & -u_1Y_1 & -u_1Z_1 \\
+0 & 0 & 0 & 0 & X_1 & X_1 & X_1 & 1 & -v_1X_1 & -v_1Y_1 & -v_1Z_1 \\
+X_2 & X_2 & X_2 & 1 & 0 & 0 & 0 & 0 & -u_2X_2 & -u_2Y_2 & -u_2Z_2 \\
+0 & 0 & 0 & 0 & X_2 & X_2 & X_2 & 1 & -v_2X_2 & -v_2Y_2 & -v_2Z_2 \\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+X_n & X_n & X_n & 1 & 0 & 0 & 0 & 0 & -u_nX_n & -u_nY_n & -u_nZ_n \\
+0 & 0 & 0 & 0 & X_n & X_n & X_n & 1 & -u_nX_n & -u_nY_n & -u_nZ_n 
+\end{bmatrix}
+\begin{pmatrix}m_{11} \\ m_{12} \\ m_{13} \\ m_{14} \\ m_{21} \\ m_{22} \\ m_{23} \\ m_{24} \\ m_{31} \\ m_{32} \\ m_{33} \\ m_{34} \end{pmatrix} = \begin{pmatrix} u_1 \\ v_1 \\ u_2 \\ v_2 \\ \vdots \\ u_n \\ v_n \end{pmatrix}
+\]
+
+Assim, obtemos um sistema com 11 incógnitas do tipo $ \vec{A_m} = \vec{b} $ , que é sobre determinado, isso é, a matriz possui dimensão $ m \times n $ e $ m > n $ (nesse caso, $ m = 12 $ e $ n = 11$ ). Este tipo de sistema normalmente não possui uma solução exata, então desejamos buscar uma solução aproximada, que, por sua vez, pode ser encontrada utilizando-se o método dos mínimos quadrados. De fato, é comum usarmos mais do que 12 equações, pois quanto mais valores $ (u, v, X, Y, Z) $ forem obtidos, maior o número de equações utilizadas e mais diluído será o erro encontrado.
+
+\subsubsection{Padrões de Calibração}
+
+\section{Espaços de cores}
+
+\section{Comparação de Histogramas}
+
+\section{Haar-cascades}
+
+\chapter{Execução}
+
+
+%\section{Figuras e tabelas}
+%
+%Esta seção faz referência às Figuras~\ref{fig:estrutura},~\ref{fig:ex1} e~\ref{fig:ex2}, a título de exemplo. A primeira figura apresenta a estrutura de uma figura. A \emph{descrição} deve aparecer \textbf{acima} da figura. Abaixo da figura, deve ser indicado a origem da imagem, mesmo se essa for apenas os autores do texto.
+%
+%A Figura~\ref{fig:ex1} representa o caso mais comum, onde a figura propriamente dita é importada de um arquivo (neste exemplo em formato \texttt{eps} ou \texttt{pdf}. Veja a seção \ref{sec:fig_format}). A Figura~\ref{fig:ex2} exemplifica o uso do environment \texttt{picture}, para desenhar usando o próprio~\LaTeX.
+%
+%\begin{figure}[h]
+%    \caption{Descrição da Figura deve ir no topo}
+%    \begin{center}
+%        % Aqui vai um includegraphics , um picture environment ou qualquer
+%        % outro comando necessário para incorporar o formato de imagem
+%        % utilizado.
+%        \begin{picture}(100,100)
+%                \put(0,0){\line(0,1){100}}
+%                \put(0,0){\line(1,0){100}}
+%                \put(100,100){\line(0,-1){100}}
+%                \put(100,100){\line(-1,0){100}}
+%                \put(10,50){Uma Imagem}
+%        \end{picture}
+%    \end{center}
+%    \label{fig:estrutura}
+%    \legend{Fonte: Os Autores}
+%\end{figure}
+%
+%\begin{figure}
+%    \caption{Exemplo de figura importada de um arquivo e também exemplo de caption muito grande que ocupa mais de uma linha na Lista~de~Figuras}
+%    \centerline{\includegraphics[width=8em]{fig}}
+%    \legend{Fonte: Os Autores}
+%    \label{fig:ex1}
+%\end{figure}
+%
+%% o `[h]' abaixo é um parâmetro opcional que sugere que o LaTeX coloque a
+%% figura exatamente neste ponto do texto. Somente preocupe-se com esse tipo
+%% de formatação quando o texto estiver completamente pronto (uma frase a mais
+%% pode fazer o LaTeX mudar completamente de idéia sobre onde colocar as
+%% figuras e tabelas)
+%%\begin{figure}[h]
+%\begin{figure}
+%    \caption{Exemplo de figura desenhada com o environment \texttt{picture}.}
+%    \begin{center}
+%        \setlength{\unitlength}{.1em}
+%        \begin{picture}(100,100)
+%                \put(20,20){\circle{20}}
+%                \put(20,20){\small\makebox(0,0){a}}
+%                \put(80,80){\circle{20}}
+%                \put(80,80){\small\makebox(0,0){b}}
+%                \put(28,28){\vector(1,1){44}}
+%        \end{picture}
+%    \end{center}
+%    \legend{Fonte: Os Autores}
+%    \label{fig:ex2}
+%\end{figure}
+%
+%Tabelas são construídas com praticamente os mesmos comandos. Ver a tabela \ref{tbl:ex1}.
+%
+%\begin{table}[h]
+%    \caption{Uma tabela de Exemplo}
+%    \begin{center}
+%        \begin{tabular}{c|c|p{5cm}}
+%            \textit{Col 1}  &   \textit{Col 2}  &   \textit{Col 3} \\
+%            \hline
+%            \hline
+%            Val 1           &   Val 2           & Esta coluna funciona como um parágrafo, tendo uma margem definida em 5cm. Quebras de linha funcionam como em qualquer parágrafo do tex. \\
+%            Valor Longo     & Val 2             & Val 3 \\
+%            \hline
+%        \end{tabular}
+%    \end{center}
+%    \legend{Fonte: Os Autores}
+%    \label{tbl:ex1}
+%\end{table}
+%
+%\subsection{Formato de Figuras}
+%\label{sec:fig_format}
+%
+%O LaTeX permite utilizar vários formatos de figuras, entre eles \emph{eps}, \emph{pdf}, \emph{jpeg} e \emph{png}. Programas de diagramação como Inkscape (e mesmo LibreOffice) permitem gerar arquivos de imagens vetoriais que podem ser utilizados pelo LaTeX sem dificuldade. Pacotes externos permitem utilizar SVG e outros formatos.
+%
+%Dia e xfig são programas utilizados por dinossauros para gerar figuras vetoriais. Se possível, evite-os.
+%
+%\chapter{Classificação dos etc.}
+%
+%O formato adotado pela ABNT prevê apenas três níveis (capítulo, seção e subseção). Assim, \texttt{\char'134subsubsection} não é aconselhado.
+%
+%\section{Sobre as referências bibliográficas}
+%
+%A classe \emph{iiufrgs} faz uso do pacote \emph{abnTeX2} com algumas alterações
+%feitas por Sandro Rama Fiorini. Culpe ele se algo der errado. Agradeça a ele
+%pelo que der certo. As modificações dão uma camada de tinta NATBIB-style,
+%já que o abntex2 usa uns comandos de citação feitos para alienígenas de 5 braços 
+%wtf. Exemplos de citação:
+%
+%\begin{itemize}
+%    \item \emph{cite}: Unicórnios são verdes \cite{Adams2009Conceptual};
+%    \item \emph{citep}:Unicórnios são verdes \citep{Winston1987taxonomy};
+%    \item \emph{citet}: Segundo \citet{Adams2009Conceptual}, unicórnios são
+%                        verdes.
+%    \item \emph{citen or citenum}: Segundo \citen{Adams2009Conceptual},
+%        unicórnios são verdes.
+%    \item \emph{citeauthor e citeyearpar}: Segundo artigos de
+%        \citeauthor{Adams2009Conceptual} , unicórnios são verdes 
+%        \citeyearpar{Adams2009Conceptual}.
+%
+%\end{itemize}
+%
+%O estilo abnt fornecido antigamente pelo UTUG não é mais recomendado, pois não
+%produz saída de acordo com as exigências da biblioteca.
+%
+%Recomenda-se o uso de bibtex para gerenciar as referências (veja o arquivo
+%biblio.bib).
+%
+%% e aqui vai a parte principal
+%%
+%% \chapter{Estado da arte}
+%% \chapter{Mais estado da arte}
+%% \chapter{A minha contribuição}
+%% \chapter{Prova de que a minha contribuição é válida}
+%% \chapter{Conclusão}
+%
+%% referencias
+%% aqui será usado o environment padrao `thebibliography'; porém, sugere-se
+%% seriamente o uso de BibTeX e do estilo abnt.bst (veja na página do
+%% UTUG)
+%%
+%% observe também o estilo meio estranho de alguns labels; isso é
+%% devido ao uso do pacote `natbib', que permite fazer citações de
+%% autores, ano, e diversas combinações desses
+
+\bibliographystyle{abntex2-alf}
+\bibliography{biblio}
+
+\end{document}
