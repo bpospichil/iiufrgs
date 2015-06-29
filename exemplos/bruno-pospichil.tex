@@ -26,7 +26,6 @@
 %   * oneside    -- Desliga frente-e-verso
 %   * nominatalocal -- Lê os dados da nominata do arquivo nominatalocal.def
 
-
 % Use unicode
 \usepackage[utf8]{inputenc}   % pacote para acentuação
 
@@ -45,6 +44,7 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
+
 
 %
 % Informações gerais
@@ -81,7 +81,7 @@
 % \renewcommand{\nominataCoord}{Prof.~Carlos Alberto Heuser}
 % \renewcommand{\nominataCoordname}{Coordenador do PPGC}
 % \renewcommand{\nominataBibchefe}{Beatriz Regina Bastos Haro}
-% \renewcommand{\nominataBibchefename}{Bibliotec{\'a}ria-chefe do Instituto de Inform{\'a}tica}
+% \renewcommand{\nominataBibchefename}{finalBibliotec{\'a}ria-chefe do Instituto de Inform{\'a}tica}
 % \renewcommand{\nominataChefeINA}{Prof.~Jos{\'e} Valdeni de Lima}
 % \renewcommand{\nominataChefeINAname}{Chefe do \deptINA}
 % \renewcommand{\nominataChefeINT}{Prof.~Leila Ribeiro}
@@ -128,9 +128,9 @@
 \begin{flushright}
 \mbox{}\vfill
 {\sffamily\itshape
-``If I have seen farther than others,\\
-it is because I stood on the shoulders of giants.''\\}
---- \textsc{Sir~Isaac Newton}
+``Não seremos limitados pela informação que temos.\\
+Seremos limitados por nossa habilidade de processar esta informação.''\\}
+--- \textsc{Peter Drucker}
 \end{flushright}
 
 % agradecimentos
@@ -163,7 +163,16 @@ the abstract should not contain more than 500~words.}
 \begin{listofabbrv}{SPMD}
         \item[DLT] Direct Linear Transform
         \item[CV] Computer Vision
-  
+        \item[RGB] Red, Green and Blue
+        \item[BGR] Blue, Green and Red
+        \item[BGRA] Blue, Green, Red and Alpha
+        \item[CIE] Commission Internationale de L'éclairage
+        \item[PMS] Pantone Matching System
+        \item[NCS] Natural Color System
+        \item[USD] United States Dollar
+        \item[MB] Megabytes ($ 10\times10^6 $ bytes)
+        \item[GB] Gigabytes ($ 10\times10^9 $ bytes)
+        \item[BGS] Background Subtraction  
 \end{listofabbrv}
 
 % idem para a lista de símbolos
@@ -201,7 +210,7 @@ Imagine uma caixa, aonde existe um pequeno furo (do grego \textit{stenopo}, por 
 \caption{Modelo de câmera estenopeica}
 \includegraphics{../../../Dropbox/__TG1/_images/image1}
 \label{fig:image1}
-\legend{Fonte: Forsyth}
+\legend{Fonte: \citeauthor{Forsyth2011}}
 \end{figure}
 
 Esse modelo define um mapeamento geométrico do mundo 3D para o plano de imagem 2D, conhecido como projeção perspectiva, que cria uma imagem invertida e, as vezes é conveniente se pensar numa imagem virtual, criada em um plano entre a face contendo o furo e a imagem original, à mesma distância entre essa mesma face e o plano da imagem. Conforme o contexto, pode ser útil pensar na imagem virtual ou na real.
@@ -213,7 +222,7 @@ A projeção em perspectiva gera alguns efeitos na imagem projetada: o tamanho a
 	\caption{Distorção de tamanho}
 	\includegraphics{../../../Dropbox/__TG1/_images/image2}
 	\label{fig:image2}
-	\legend{Fonte: Forsyth}
+	\legend{Fonte: \citeauthor{Forsyth2011}}
 \end{figure}
 
 Outro efeito gerado na projeção de imagem é que duas retas paralelas no mundo, isso é, cuja intersecção ocorreria em uma distância infinita, se intersectem no horizonte da imagem. Tais coordenadas da intersecção na imagem são chamados pontos de fuga (\textit{vanishing points}). O conjunto dos pontos de fuga correspondentes a retas paralelas em um plano formam uma reta, conhecida como reta de fuga (\textit{vanishing line}).
@@ -223,7 +232,7 @@ Outro efeito gerado na projeção de imagem é que duas retas paralelas no mundo
 	\caption{Retas de fuga}
 	\includegraphics{../../../Dropbox/__TG1/_images/image3}
 	\label{fig:image3}
-	\legend{Fonte: Hartley}
+	\legend{Fonte: \citeauthor{Hartley2003}}
 \end{figure}
 
 \subsection{Parâmetros de Câmeras}
@@ -236,7 +245,7 @@ Definimos como parâmetros de câmera as informações que são responsáveis pe
 	\caption{Modelo de câmera estenopeica}
 	\includegraphics{../../../Dropbox/__TG1/_images/image4}
 	\label{fig:image4}
-	\legend{Fonte: Hartley}
+	\legend{Fonte: \citeauthor{Hartley2003}}
 \end{figure}
 
 Consideremos o modelo representado na Figura~\ref{fig:image4}, aonde \texttt{C} representa o centro de projeção, também conhecido como centro da câmera ou centro óptico. Vamos definir um sistema de coordenadas onde \texttt{C} seja a origem, e consideraremos o plano \texttt{Z = f}, que é conhecido como plano da imagem ou plano focal e está posicionado em frente ao centro de projeção e \texttt{f} é a distância focal. A linha que passa pelo centro da câmera e é perpendicular ao plano da imagem é chamada de eixo principal ou eixo óptico e o ponto onde esse eixo encontra o plano da imagem é conhecido como ponto principal (\texttt{p}).
@@ -255,7 +264,7 @@ Na matriz acima, assumimos que a origem das coordenadas no plano da imagem é o 
 	\caption{Sistema de coordenadas da imagem e da câmera}
 	\includegraphics{../../../Dropbox/__TG1/_images/image5}
 	\label{fig:image5}
-	\legend{Fonte: Hartley}
+	\legend{Fonte: \citeauthor{Hartley2003}}
 \end{figure}
 
 Assim, podemos escrever a equação em coordenadas homogêneas, chegando a
@@ -275,7 +284,7 @@ Os parâmetros extrínsecos relacionam o sistema de coordenadas da câmera com o
 	\caption{Transformação entre o sistema de coordenadas da câmera e do mundo}
 	\includegraphics{../../../Dropbox/__TG1/_images/image6}
 	\label{fig:image6}
-	\legend{Fonte: Hartley}
+	\legend{Fonte: \citeauthor{Hartley2003}}
 \end{figure}
 
 Sendo $ \widetilde{X} $ um vetor não homogêneo representando um ponto no sistema de coordenadas do mundo e $ \widetilde{X}_{cam} $ representando o mesmo ponto no sistema de coordenadas da câmera, podemos escrever $ \widetilde{X}_{cam} = R(\widetilde{X} - \widetilde{C}) $ , aonde $ \widetilde{C} $ representa as coordenadas do centro da câmera no sistema de coordenadas do mundo e R é uma matriz $ 3 \times 3 $ representando a orientação do sistema de coordenadas da câmera, ou seja:
@@ -299,7 +308,7 @@ Alem disso, pode ser útil deixar o centro da câmera como variável implícita.
 Os parâmetros intrínsecos e extrínsecos descritos anteriormente fornecem a descrição do processo de formação de imagem em uma câmera estenopeica, no entanto, ao lidarmos com câmeras de lente reais, encontramos algumas distorções que não foram previstas
 até aqui. Considerando que estas são geradas pelo processo construtivo da lente, podemos considerá-las como um tipo específico de parâmetros intrínsecos.
 
-De acordo com Hartley e Zisserman (2004), a modelagem exata das lentes é uma tarefa complexa, sendo que dessas imperfeições, a distorção radial (ou distorção barril) é a mais relevante em ser corrigida. Essa distorção provoca que uma reta no sistema de coordenadas do mundo seja projetada com uma curvatura no plano da imagem.
+De acordo com \citen{Hartley2003}, a modelagem exata das lentes é uma tarefa complexa, sendo que dessas imperfeições, a distorção radial (ou distorção barril) é a mais relevante em ser corrigida. Essa distorção provoca que uma reta no sistema de coordenadas do mundo seja projetada com uma curvatura no plano da imagem.
 
 Estamos fazer.
 
@@ -319,10 +328,10 @@ Estamos fazer.
 		\label{fig:image7b}
 	\end{subfigure}
 	\label{fig:image7}
-	\legend{Fonte: Morvan}
+	\legend{Fonte: \citeauthor{Morvan2009}}
 \end{figure}
 
-De acordo com Morvan (2009), a relação entre a posição dos pixeis na imagem distorcida $ (x_d, y_d)^T $ e a imagem corrigida $ (x_u, y_u)^T $ é definida por
+De acordo com \citen{Morvan2009}, a relação entre a posição dos pixeis na imagem distorcida $ (x_d, y_d)^T $ e a imagem corrigida $ (x_u, y_u)^T $ é definida por
 \[ \begin{bmatrix}x_u - p_x \\ y_u - p_y \end{bmatrix} = L(r_d)\begin{bmatrix}x_d - p_x \\ y_d - p_y \end{bmatrix}\]
 onde $ (p_x, p_y)^T $ são as coordenadas do ponto principal e $ L(r_d) = 1+K_1{r_d}^2 $ em que $ k_1 $ é a quantidade de distorção radial presente na imagem e $ {r_d}^2 = (x_d - p_x)^2 + (y_d - p_x)^2 $.
 
@@ -397,13 +406,105 @@ Assim, obtemos um sistema com 11 incógnitas do tipo $ \vec{A_m} = \vec{b} $ , q
 
 \subsubsection{Padrões de Calibração}
 
+Como pudemos ver, o processo de calibração de câmera, principalmente ao se considerar a distorção das lentes, não é um processo dos mais simples de ser executado. Uma alternativa muito eficiente é a utilização de padrões de calibração.
+
+Um padrão de calibração consiste na utilização de uma figura que possua bordas bem definidas, de modo que essas sejam facilmente detectáveis, usualmente utilizamos algo semelhante a um tabuleiro de xadrez, pois suas formas proporcionam essa detecção, como pode ser visto na figura~\ref{fig:calib}. Com esse objeto em mãos, podemos utilizar softwares para obter os parâmetros de calibração da câmera automaticamente, isso é, definir a matriz de calibração da câmera. Além disso, outro ponto importante é que a calibração radial é \textit{off-line}, isso é, pode ser efetuada com a câmera fora de sua posição final, pois não se alteram em caso de alteração da cena. Isso acaba sendo conveniente, pois poderemos instalar uma câmera já calibrada, ficando necessária somente a definição dos parâmetros relativos a cena (extrínsecos).
+
+\begin{figure}
+	\centering
+	\caption{Exemplo de calibração de câmera}
+	\includegraphics{../../../Dropbox/__TG1/_images/calib}
+	\label{fig:calib}
+	\legend{Fonte: OpenCV Tutorials}
+\end{figure}
+
+Uma das alternativas disponíveis é o \textit{Camera Calibration Toolbox for Matlab}, que é um \textit{framework} desenvolvido para ser executado no Matlab com diversos recursos de calibração de câmeras. Além disso, seu código já foi portado para a linguagem C, de modo que foi embutido no OpenCV, que é uma biblioteca para o desenvolvimento de aplicativos na área de visão computacional, originalmente desenvolvida pela Intel.
+
 \section{Espaços de cores}
+
+Cor é o resultado da percepção da luz que incide na retina em células foto-receptoras, conhecidas como cones. De acordo com \citen{Shapiro2001}, a percepção de cor depende, além das características físicas da luz, de um processamento complexo pelo olho e cérebro que integra as propriedades do estímulo com a sensibilidade do observador.
+
+De acordo com \citen{Feitosa-Santana2006}, existem registros de estudos para encontrar uma maneira de se organizar as cores desde a antiguidade. Dentre os primeiros registros de espaço de cores, pode-se destacar  o trabalho de Pitágoras (circa 570-500 a.C.), que criou um espaço de cores semicircular relacionando as notas da escala musical de tons e meio tons aos planetas que, por sua vez, eram representados por determinadas cores, como pode ser visto na figura~\ref{fig:pit}.
+
+\begin{figure}
+	\centering
+	\caption{Modelo de espaço de cores de Pitágoras}
+	\includegraphics{../../../Dropbox/__TG1/_images/pit}
+	\label{fig:pit}
+	\legend{Fonte: http://www.colorsystem.com/}
+\end{figure}
+
+A colorimetria se tornou tecnicamente útil quando, em 1931, o CIE padronizou as funções de correspondência de cores. determinadas pela sistematização das misturas de cores necessárias para um observador, em condições específicas de iluminação. A partir do experimento executado em 1931 foram definidos os espaços de cores CIE XYZ e RGB.
+
+Hoje em dia existem uma série de espaços de cores que atendem a determinados interesses, alguns com finalidade comercial, outro de uso genérico. Os espaços definidos pelo CIE em 1931 são de uso genérico, aonde ainda podemos adicionar outros como o HSV, CIELAB, CIELuv. Dentre os espaços de cores de fins comerciais, os mais conhecidos são o Pantone (PMS) e o NMS, desenvolvido pelo Scandinavian Colour Institute.
+
+\subsection{Modelo de Cor CIE 1931 RGB}
+
+O modelo de cores aditivo CIE RGB, foi definido a partir dos experimentos executados em 1931 no CIE e foi constituído a partir da teoria de visão colorida tricromática, de Young-Helmholtz e no triângulo de cores de James Clerk Maxwell, representado na figura~\ref{fig:triangle}. 
+
+\begin{figure}
+	\centering
+	\caption{Triângulo de cores de Maxwell}
+	\includegraphics{../../../Dropbox/__TG1/_images/triangle}
+	\label{fig:triangle}
+	\legend{Fonte: Appalachian State University - Psychology 3215}
+\end{figure}
+
+\subsection{Modelo de Cor CIELAB}
 
 \section{Comparação de Histogramas}
 
-\section{Haar-cascades}
+\section{Haar-Cascades}
 
-\chapter{Execução}
+\section{Background Subtraction}
+
+\section{Blob}
+
+\section{Trabalhos Relacionados}
+
+\chapter{A Técnica Proposta}
+
+Esse trabalho foi concebido com uma premissa básica: ser de baixo custo. Por isso, durante a avaliação do equipamento utilizado, se chegou ao uso do Raspberry Pi, que é um computador de pequenas dimensões e custo (cerca de 200 reais, no Brasil). Apesar do baixo custo, essa especificação nos dá um poder de processamento limitado, quando o trabalho foi idealizado, o equipamento que existia era o Raspberry Pi B+, que vinha equipado de um processador de 700Mhz e 512MB de RAM. Em fevereiro de 2015 a Raspberry Pi Foundation anunciou o lançamento do Raspberry Pi 2, com um aumento considerável de capacidade computacional, mantendo o mesmo perfil de custo do projeto, conforme a Tabela~\ref{tbl:rpi}.
+
+\begin{table}
+	\caption{Comparativo Raspberry Pi B+ e Raspberry Pi B Geração 2}
+	\begin{center}
+		\begin{tabular}{c|p{5cm}|p{5cm}}
+			\textit{Recurso}  &   \textit{Raspberry Pi B+}  &   \textit{Raspberry Pi B Gen2} \\
+			\hline
+			\hline
+			Valor no lançamento & USD 35 & USD 35 \\
+			\hline
+			SOC & Broadcom BCM2835  & Broadcom BCM2836 \\
+			\hline
+			CPU & 700 MHz single-core ARM 1176JZF-S & 900 MHz quad-core ARM Cortex-A7 \\
+			\hline
+			Memory (SDRAM) & 512 MB & 1 GB \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\legend{Fonte: O Autor}
+	\label{tbl:rpi}
+\end{table}
+
+\section{Proposta Original}
+
+Apesar de haver um ganho considerável em processamento, as características do equipamento eram o principal limitante dos algoritmos e técnicas a serem utilizados, originalmente, durante a especificação prevista no Trabalho de Graduação 1 (Anexo~\ref{tg1}) previam o uso de \textit{Haar-Cascades}, conforme proposto por \citen{Oliveira2008} e \textit{Background Subtraction}. 
+
+\textit{Haar-Cascades} se mostrou uma técnica ineficiente já que não foi possível encontrar um conjunto de treinamento suficiente para o cenário em questão e, inicialmente, gerar um novo conjunto de treinamento estava fora de cogitação pela carga computacional necessária. Apesar dessa técnica ser bem eficiente em identificar por padrões treinados em imagens, infelizmente, não dispondo de um conjunto de treinamento adequado, se mostra ineficiente.
+
+O uso de \textit{background subtraction}, que também foi um dos algoritmos que foram considerados originalmente, foi amplamente testado buscando encontrar um algoritmo e configurações que fossem pouco suscetíveis à variações de luminosidade (pela presença de nuvens ou pelo passar das horas do dia). Nesse quesito foram avaliados diversos algoritmos consagrados de BGS: diferenças entre quadros e \textit{mixture of gaussians} conforme proposto por \citen{Zivkovic2004}. Sendo que, para o cenário em questão a última se mostrou mais eficiente, porém com uma alta carga computacional, principalmente quando executado no Raspberry Pi, por isso essa técnica também foi relegada.
+
+
+\section{Segunda Implementação}
+
+
+
+
+
+\chapter{Resultados}
+
+\chapter{Conclusões}
 
 
 %\section{Figuras e tabelas}
@@ -533,6 +634,10 @@ Assim, obtemos um sistema com 11 incógnitas do tipo $ \vec{A_m} = \vec{b} $ , q
 %% autores, ano, e diversas combinações desses
 
 \bibliographystyle{abntex2-alf}
-\bibliography{biblio}
+\bibliography{export}
+
+\annex
+\chapter{Trabalho de Graduação 1}
+\label{tg1}
 
 \end{document}
