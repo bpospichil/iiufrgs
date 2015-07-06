@@ -26,6 +26,7 @@
 %   * oneside    -- Desliga frente-e-verso
 %   * nominatalocal -- Lê os dados da nominata do arquivo nominatalocal.def
 
+
 % Use unicode
 \usepackage[utf8]{inputenc}   % pacote para acentuação
 
@@ -42,33 +43,7 @@
 \usepackage[alf,abnt-emphasize=bf]{abntex2cite}	% pacote para usar citações abnt
 
 \usepackage{graphicx}
-\usepackage{caption}
-\usepackage{subcaption}
-
-
-%
-% Informações gerais
-%
-\title{Sistema de Baixo Custo para Detecção de Vagas de Estacionamento por Visão Computacional}
-
-\author{Pospichil}{Bruno Meybom}
-% alguns documentos podem ter varios autores:
-%\author{Flaumann}{Frida Gutenberg}
-%\author{Flaumann}{Klaus Gutenberg}
-
-% orientador e co-orientador são opcionais (não diga isso pra eles :))
-\advisor[Prof.~Dr.]{Jung}{Claudio Rosito}
-%\coadvisor[Prof.~Dr.]{Knuth}{Donald Ervin}
-
-% a data deve ser a da defesa; se nao especificada, são gerados
-% mes e ano correntes
-\date{julho}{2015}
-
-% o local de realização do trabalho pode ser especificado (ex. para TCs)
-% com o comando \location:
-\location{Porto Alegre}{RS}
-
-% itens individuais da nominata podem ser redefinidos com os comandos
+\usepackage{caption}% itens individuais da nominata podem ser redefinidos com os comandos
 % abaixo:
 % \renewcommand{\nominataReit}{Prof\textsuperscript{a}.~Wrana Maria Panizzi}
 % \renewcommand{\nominataReitname}{Reitora}
@@ -101,19 +76,41 @@
 % Monografias de Especialização [espec]:
 % \espec{Redes e Sistemas Distribuídos}      % nome do curso
 % \coord[Profa.~Dra.]{Weber}{Taisy da Silva} % coordenador do curso
-% \dept{INA}                                 % departamento relacionado
+% \dept{INA}     
+\usepackage{subcaption}
+%
+% Informações gerais
+%
+\title{Sistema de Baixo Custo para Detecção de Vagas de Estacionamento por Visão Computacional}
+
+\author{Pospichil}{Bruno Meybom}
+% alguns documentos podem ter varios autores:
+%\author{Flaumann}{Frida Gutenberg}
+%\author{Flaumann}{Klaus Gutenberg}
+
+% orientador e co-orientador são opcionais (não diga isso pra eles :))
+\advisor[Prof.~Dr.]{Jung}{Claudio Rosito}
+%\coadvisor[Prof.~Dr.]{Knuth}{Donald Ervin}
+
+% a data deve ser a da defesa; se nao especificada, são gerados
+% mes e ano correntes
+\date{julho}{2015}
+
+% o local de realização do trabalho pode ser especificado (ex. para TCs)
+% com o comando \location:
+\location{Porto Alegre}{RS}
 
 %
 % palavras-chave
 % iniciar todas com letras minúsculas, exceto no caso de abreviaturas
 %
-\keyword{formatação eletrônica de documentos}
-\keyword{\LaTeX}
-\keyword{ABNT}
-\keyword{UFRGS}
+\keyword{Visão computacional}
+\keyword{Estacionamento}
+\keyword{Processamento de imagem}
+\keyword{Veículos}
 
 %
-% inicio do documento
+% inicio do documen\nocite{*}to
 %
 \begin{document}
 
@@ -141,17 +138,15 @@ Agradeço ao \LaTeX\ por não ter vírus de macro\ldots
 
 % resumo na língua do documento
 \begin{abstract}
-Este documento é um exemplo de como formatar documentos para o
-Instituto de Informática da UFRGS usando as classes \LaTeX\
-disponibilizadas pelo UTUG\@. Ao mesmo tempo, pode servir de consulta
-para comandos mais genéricos. \emph{O texto do resumo não deve
-conter mais do que 500 palavras.}
+Um dos maiores problemas das grandes cidades hoje em dia é, sem dúvidas, o gerenciamento de uma crescente frota de veículos, que dobrou nos últimos dez anos. Com esse crescimento, se torna cada vez mais complicado encontrar um espaço para deixar seu carro, inclusive em espaços reservados para esse fim - os estacionamentos. Em razão disso, cada vez mais encontramos soluções que buscam reduzir ao máximo o tempo de busca por uma vaga, é comum encontrar em shoppings soluções que indicam a ocupação individual de cada vaga, com luzes características, em estacionamentos internos. No entanto, quando o espaço está sujeito às intempéries, não encontramos sistemas semelhantes.
+
+Esse trabalho se propõe a verificar possíveis soluções para esse caso, avaliando publicações recentes da área de visão computacional e processamento de imagem, sempre buscando utilizar-se de equipamentos de baixo custo.
 \end{abstract}
 
 % resumo na outra língua
 % como parametros devem ser passados o titulo e as palavras-chave
 % na outra língua, separadas por vírgulas
-\begin{englishabstract}{Using \LaTeX\ to Prepare Documents at II/UFRGS}{Electronic document preparation, \LaTeX, ABNT, UFRGS}
+\begin{englishabstract}{Low-Cost System to Detect Parking Spaces Using Computer Vision}{Parking spot, Computer vision, OpenCV, Parking space, Parking, Color histogram}
 This document is an example on how to prepare documents at II/UFRGS
 using the \LaTeX\ classes provided by the UTUG\@. At the same time, it
 may serve as a guide for general-purpose commands. \emph{The text in
@@ -172,8 +167,17 @@ the abstract should not contain more than 500~words.}
         \item[USD] United States Dollar
         \item[MB] Megabytes ($ 10\times10^6 $ bytes)
         \item[GB] Gigabytes ($ 10\times10^9 $ bytes)
-        \item[BGS] Background Subtraction  
-\end{listofabbrv}
+        \item[BGS] Background Subtraction
+        \item[RCA] Radio Corporation of America
+        \item[ROI] Region of Interest
+        \item[GMM] Gaussian Mixture Model
+        \item[PUCRS] Pontifícia Universidade Católica do Rio Grande do Sul
+        \item[HSV] Hue, saturation and value
+        \item[HSL] Hue, saturation and lightness
+        \item[RPI] Raspberry Pi
+        \item[CMOS] Complementary Metal-Oxide Semiconductor
+        \item[QXGA] Quantum Extended Graphics Array
+    \end{listofabbrv}
 
 % idem para a lista de símbolos
 %\begin{listofsymbols}{$\alpha\beta\pi\omega$}
@@ -420,11 +424,37 @@ Um padrão de calibração consiste na utilização de uma figura que possua bor
 
 Uma das alternativas disponíveis é o \textit{Camera Calibration Toolbox for Matlab}, que é um \textit{framework} desenvolvido para ser executado no Matlab com diversos recursos de calibração de câmeras. Além disso, seu código já foi portado para a linguagem C, de modo que foi embutido no OpenCV, que é uma biblioteca para o desenvolvimento de aplicativos na área de visão computacional, originalmente desenvolvida pela Intel.
 
+\subsection{Vista de pássaro}
+
+Vista de pássaro ou \textit{bird's eye view} consiste na visualização de um objeto ou plano como se estivesse acima do mesmo. Usualmente se efetua matriz de homografia para efetuar a transformação para esse ponto de vista.
+
+\begin{figure}
+	\centering
+	\caption{Vista de pássaro (\textit{bird's eye view})}
+	\begin{subfigure}[b]{0.47\textwidth}
+		\includegraphics[width=\textwidth]{../../../Dropbox/__TG1/_images/birds1}
+		\caption{Visão de uma superfície plana}
+		\label{fig:birds1}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{../../../Dropbox/__TG1/_images/birds2}
+		\caption{Vista de pássaro}
+		\label{fig:birds2}
+	\end{subfigure}
+	\label{fig:image7}
+	\legend{Fonte: \citeauthor{Bradski2008}}
+\end{figure}
+
+
+Apesar de não ter utilizado essa terminologia, o processo de calibração de câmera consiste na obtenção de uma ou mais matrizes de homografia que efetuam a correção das distorções provocadas pelas lentes na cena. No caso da vista de pássaro, seria necessário, apenas, encontrar a transformação que mapeasse pontos coplanares para uma mesma perspectiva, o método utilizado é o mesmo para a calibração da câmera: DLT.
+
+
 \section{Espaços de cores}
 
 Cor é o resultado da percepção da luz que incide na retina em células foto-receptoras, conhecidas como cones. De acordo com \citen{Shapiro2001}, a percepção de cor depende, além das características físicas da luz, de um processamento complexo pelo olho e cérebro que integra as propriedades do estímulo com a sensibilidade do observador.
 
-De acordo com \citen{Feitosa-Santana2006}, existem registros de estudos para encontrar uma maneira de se organizar as cores desde a antiguidade. Dentre os primeiros registros de espaço de cores, pode-se destacar  o trabalho de Pitágoras (circa 570-500 a.C.), que criou um espaço de cores semicircular relacionando as notas da escala musical de tons e meio tons aos planetas que, por sua vez, eram representados por determinadas cores, como pode ser visto na figura~\ref{fig:pit}.
+\citen{Feitosa-Santana2006}, relatou que existem registros de estudos para encontrar uma maneira de se organizar as cores desde a antiguidade. Dentre os primeiros registros de espaço de cores, pode-se destacar  o trabalho de Pitágoras (circa 570-500 a.C.), que criou um espaço de cores semicircular relacionando as notas da escala musical de tons e meio tons aos planetas que, por sua vez, eram representados por determinadas cores, como pode ser visto na figura~\ref{fig:pit}.
 
 \begin{figure}
 	\centering
@@ -438,9 +468,11 @@ A colorimetria se tornou tecnicamente útil quando, em 1931, o CIE padronizou as
 
 Hoje em dia existem uma série de espaços de cores que atendem a determinados interesses, alguns com finalidade comercial, outro de uso genérico. Os espaços definidos pelo CIE em 1931 são de uso genérico, aonde ainda podemos adicionar outros como o HSV, CIELAB, CIELuv. Dentre os espaços de cores de fins comerciais, os mais conhecidos são o Pantone (PMS) e o NMS, desenvolvido pelo Scandinavian Colour Institute.
 
-\subsection{Modelo de Cor CIE 1931 RGB}
+No escopo desse trabalho, as imagens capturadas pelas câmeras utilizam o espaço de cores RGB (na verdade BGR, devido à especificação do OpenCV), contudo, se faz útil efetuar a conversão para outro espaço de cores aonde a iluminação (luminância) seja separada das informações de cores (crominância), cujos modelos mais utilizados são HSV, HSL, CIEXYZ, YCbCr, CIELAB, CIELUV, YUV. \citen{Lee2005} efetuou uma avaliação de similaridade de imagem por meio de intersecção de histogramas, uma técnica que será utilizada nesse trabalho e em seus resultados encontrou que o CIELAB obteve os melhores índices de acerto, por esse motivo, este será o espaço de cores utilizado.
 
-O modelo de cores aditivo CIE RGB, foi definido a partir dos experimentos executados em 1931 no CIE e foi constituído a partir da teoria de visão colorida tricromática, de Young-Helmholtz e no triângulo de cores de James Clerk Maxwell, representado na figura~\ref{fig:triangle}. 
+\subsection{Modelo de Cores CIE 1931 RGB}
+
+O modelo de cores aditivo CIE RGB, foi definido a partir dos experimentos executados em 1931 no CIE e foi constituído a partir da teoria de visão colorida tricromática, de Young-Helmholtz e no triângulo de cores de James Clerk Maxwell, representado na figura~\ref{fig:triangle}. Esse modelo acabou se tornando padrão \textit{de facto} devido a ser visualmente intuitivo, uma vez que a maior parte das cores pode ser formada a partir de uma combinação das três cores fundamentais, e esse modelo passou a ser utilizado em equipamentos comerciais em meados da década de 50, quando a RCA introduziu o modelo em seu televisor CT-100, o primeiro colorido da marca.
 
 \begin{figure}
 	\centering
@@ -450,21 +482,225 @@ O modelo de cores aditivo CIE RGB, foi definido a partir dos experimentos execut
 	\legend{Fonte: Appalachian State University - Psychology 3215}
 \end{figure}
 
-\subsection{Modelo de Cor CIELAB}
+Apesar de ser amplamente difundido, muitas vezes quando estamos efetuando processamento das imagens, esse modelo de cor acaba não sendo a melhor escolha, principalmente pelo fato de que as variações de cor não serem uniformes. Além disso, por meio unicamente de adições não é possível se representar todas as variações de cores, sendo necessários valores negativos para R e G para se atingir toda a gama existente.
+
+\subsection{Modelo de Cores CIE 1976 L*a*b*}
+
+A percepção de pequenas variações entre cores é de suma importância em experimentos de percepção e especificação de cores. Um sistema de cores deve permitir que sejam representadas todas as cores com uma alta precisão. Em processamento de imagens é interessante que em um espaço de cores uma pequena perturbação em uma componente é aproximadamente igualmente perceptível em toda a gama do referido valor, esses modelos de cores são conhecidos como perceptualmente uniformes.
+
+Em 1976 o CIE propôs o modelo L*a*b* (Lab ou CIELAB), que, por definição é perceptualmente uniforme, que é sua maior vantagem se comparado com o RGB de 1931, contudo, não é a única vantagem, com o CIELAB é possível representar toda a a gama de cores, além disso, esse sistema se aproxima bastante do da visão humana (\textit{human vision system}).
+
+Diferentemente do RGB, aonde cada canal representa uma cor básica, no CIELAB temos dois tipos distintos de canais, o canal de luminância (iluminação) $ L* $ e os de crominância $a*$ e $b*$, aonde $a*$ representa as cores oponentes vermelha e verde e $b*$ amarelo e azul: valores positivos de $a$" indicam vermelho e negativos verde, já valores positivo de $b*$ indicam amarelo e negativos azul, como pode ser visto na figura~\ref{fig:cielab}.
+
+\begin{figure}
+	\centering
+	\caption{Modelo do CIELAB}
+	\includegraphics{../../../Dropbox/__TG1/_images/cielab}
+	\label{fig:cielab}
+	\legend{Fonte: JISC Digital Media}
+\end{figure}
 
 \section{Comparação de Histogramas}
 
-\section{Haar-Cascades}
+Histograma, também conhecido como distribuição de intensidade, é uma representação gráfica distribuída em colunas de dados, a partir da visualização de um histograma é possível aferir a maneira de distribuição, simetria e dispersão dos dados. Em processamento de imagem, histogramas são usados para se observar as características de uma imagem. Outro ponto extremamente relevante que a comparação de histogramas entre duas imagens é uma das maneiras mais eficientes de se detectar a similaridade entre elas.
 
-\section{Background Subtraction}
+\citen{Liu2015}, faz o uso de comparação de histogramas para identificar similaridade em regiões de vídeo, primeiramente a região de interesse é dividida em segmentos (\textit{bins}), e o valor de cada amostra é computado:
 
-\section{Blob}
+\[
+bin(k) = \sum_{i=0}^{M}\sum_{j=0}^{N}f_k(i,j),(0 \le k \le 255)
+\]
+
+\begin{equation}
+f_k(i,j)=\begin{cases}
+1, & \text{se $p(i,j) = k$}.\\
+0, & \text{se $p(i,j) \neq k$}.
+\end{cases}
+\end{equation}
+
+Aonde $ p(i,j) $ significa o valor do pixel $ i, j$ em determinado quadro, e $ k $ o valor desse pixel em determinado canal. Por simplicidade, iremos considerar o histograma em uma dimensão somente, contudo, é usual se utilizar histogramas em mais de uma dimensão.
+
+Uma vez tendo o histograma criado, existem diversos métodos para se encontrar a distância (ou diferença) entre dois deles, \citen{Liu2015}, descreve três das mais utilizadas atualmente: correlação, chi-quadrado e intersecção, sendo que cada uma utiliza de uma equação característica:
+
+\[
+d_{correl}(H_1,H_2) =  \frac{\sum_I (H_1(I) - \bar{H_1}) (H_2(I) - \bar{H_2})}{\sqrt{\sum_I(H_1(I) - \bar{H_1})^2 \sum_I(H_2(I) - \bar{H_2})^2}}
+\]
+\[
+\bar{H_k} =  \frac{1}{N} \sum _J H_k(J)
+\]
+\[
+d_{chi-quad}(H_1,H_2) =  \sum _I  \frac{\left(H_1(I)-H_2(I)\right)^2}{H_1(I)}
+\]
+\[
+d_{intersec}(H_1,H_2) =  \sum _I  \min (H_1(I), H_2(I))
+\]
+
+No caso da correlação, quanto maior o valor encontrado, maior a similaridade entre as duas imagens, elas forem iguais, o resultado será 1, assim como na intersecção, valores menores do que 1 indicam diferenças na imagem. Para chi-quadrado, teremos no caso de imagens idênticas 0 e valores maiores que esse indicam que existem diferenças entre elas. Na documentação do OpenCV encontramos um exemplo que demonstra os valores encontrados na comparação de histogramas, utilizando as figuras~\ref{fig:hist_0}, ~\ref{fig:hist_1} e ~\ref{fig:hist_2}, o resultado obtido está disposto na tabela~\ref{tbl:hist}.
+
+\begin{figure}[h]
+	\centering
+	\caption{Figuras de exemplo para comparação de histogramas}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{../../../Dropbox/__TG1/_images/hist_0}
+		\caption{Base}
+		\label{fig:hist_0}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{../../../Dropbox/__TG1/_images/hist_1}
+		\caption{Teste 1}
+		\label{fig:hist_1}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{../../../Dropbox/__TG1/_images/hist_2}
+		\caption{Teste 2}
+		\label{fig:hist_2}
+	\end{subfigure}
+	\label{fig:hist}
+	\legend{Fonte: OpenCV}
+\end{figure}
+
+\begin{table}[h]
+	\caption{Resultados comparação de histogramas}
+	\begin{center}
+		\begin{tabular}{c|c|c|c}
+			\textit{Método}  &   \textit{Base x Base}  &   \textit{Base x Teste 1} & \textit{Base x Teste 2}  \\
+			\hline
+			\hline
+			Correlação & 1,000000 &	0,182073 & 0,120447 \\
+			\hline
+			Chi-quadrado & 0,000000 & 21,184536 & 49,273437 \\
+			\hline
+			Intersecção & 24,391548 & 3,889029 & 5,775088 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\legend{Fonte: OpenCV}
+	\label{tbl:hist}
+\end{table}
+
+
+\section{Classificadores Haar}
+Classificadores Haar (\textit{Haar Classifiers}), é um framework de detecção de objetos rápido e robusto, proposto por \citen{Viola2004}, esse classificador usa o conceito de \textit{feature}, que é uma parte de informação que é relevante para resolver determinado problema. \textit{Features} podem ser estruturas como bordas, pontos ou objetos. No caso em questão, temos o conceito de perfis Haar (\textit{Haar-like features}), que são padrões geométricos usados nas sub-janelas de detecção, consistem de imagens adjacentes e foram assim chamadas por sua semelhança com as ondulações Haar (\textit{Haar wavelets}).
+
+\begin{figure}
+	\centering
+	\caption{Exemplos de perfis Haar}
+	\includegraphics{../../../Dropbox/__TG1/_images/haar}
+	\label{fig:haar}
+	\legend{Fonte: \citeauthor{Viola2004}}
+\end{figure}
+
+O valor de um perfil Haar é dado pela soma dos pixeis da(s) área(s) sombreada(s), subtraído da soma dos pixeis da(s) área(s) branca(s). Considerando que
+as formas são retangulares, seus valores podem ser computados rapidamente utilizando uma representação de imagem conhecida como \textbf{Imagem Integral}.
+A imagem integral no pixel x, y contém a soma dos pixeis acima e à esquerda de x, y, inclusive:
+\[ ii(x,y) = \sum_{x'\le x,y' \le y} i(x', y') \]
+
+Calculado o valor de cada perfil Haar, um classificador fraco é definido por:
+\begin{equation}
+	h(x)=\begin{cases}
+		1, & \text{se $pf(x) < p\theta$}.\\
+		0, & \text{senão}.
+	\end{cases}
+\end{equation}
+
+Aonde $ x $ é uma sub-janela, $ \theta $ é um limiar e $ p $ define a paridade, indicando a direção do sinal da inequação.
+
+Além do uso de perfis Haar, classificadores Haar utilizam AdaBoost (\textit{adaptive boosting} ou estímulo adaptável), que é um algoritmo de aprendizado de máquina proposto por \citen{Freund1997} que tem como objetivo aumentar a performance, construindo um classificador forte utilizando um conjunto de treinamento e um algoritmo de aprendizado fraco.
+
+A utilização de Classificadores Haar depende da existência de um conjunto de treinamento que tenha um bom desempenho na cena que está sendo capturada. Um uso muito comum desses algoritmos é no reconhecimento de face, uma vez que normalmente esse tipo de captura está sob mesma perspectiva, seu uso em imagens de diferentes perspectivas pode vir a introduzir uma baixa taxa de acerto.
+
+\section{Subtração de Fundo}
+Subtração de fundo (ou \textit{background subtraction}, ou \textit{foreground detection}) é um passo fundamental em muitas aplicações no campo de visão computacional e processamento digital de imagens. Consiste, em geral, na comparação de uma imagem com outra imagem que modela o plano de fundo \textit{background}.  A diferença observada consiste de objetos no primeiro plano do vídeo (\textit{foreground}). Fazem parte do primeiro plano todos os objetos que não estão fixos em uma cena. Portanto, podemos definir em linhas gerais a função de detecção como: 
+\[ |quadro_i - fundo| > limiar \]
+
+Ao analisar a função, verificamos que existe um limiar (\textit{threshold}) a ser definido  que irá determinar se o pixel em questão faz parte do plano de fundo ou do primeiro plano. Se o valor for mal escolhido teremos resultados insatisfatórios: se o limiar definido for muito alto, poderão ser ignoradas algumas alterações relevantes no quadro e, se for muito baixo, fará com que sejam considerados ruídos desprezíveis.
+
+\begin{figure}
+	\centering
+	\caption{Definição do \textit{threshold} para \textit{background subtraction}}
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{../../../Dropbox/__TG1/_images/bgs1}
+		\caption{Imagem original}
+		\label{fig:bgs1}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{../../../Dropbox/__TG1/_images/bgs2}
+		\caption{Diferença absoluta}
+		\label{fig:bgs2}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{../../../Dropbox/__TG1/_images/bgs3}
+		\caption{Limiar muito alto}
+		\label{fig:bgs3}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{../../../Dropbox/__TG1/_images/bgs4}
+		\caption{Limiar muito baixo}
+		\label{fig:bgs4}
+	\end{subfigure}
+	\label{fig:imagebgs}
+	\legend{Fonte: \citeauthor{Piccardi2004}}
+\end{figure}
+
+Atualmente contamos com dezenas de métodos disponíveis para executar o processo de subtração de fundo, que podem ser divididos em diversos grupos em função dos algoritmos utilizados:
+\begin{itemize}
+\item básicos: baseados em média e variância ao longo do tempo;
+\item lógica fuzzy;
+\item gaussianas simples;
+\item múltiplas gaussianas
+\item entre outros...
+\end{itemize}
+
+
+\citen{Sobral2013} descreveu o desenvolvimento de um \textit{framework} baseado em OpenCV que proporciona a inclusão de subtração de fundo de maneira extremamente fácil, a \textit{BGSLibrary}, a partir dessa biblioteca, foram selecionados alguns algoritmos para que fosse avaliada, num primeiro momento, a quantidade de ruído encontrada nas imagens de \textit{foreground}. Os métodos selecionados são descritos a seguir.
+
+\subsection{Diferença Entre Quadros}
+
+É um dos métodos mais simples de subtração de fundo (talvez o mais simples), nesse algoritmo, temos como o fundo sendo o valor do quadro anterior, ou seja:
+\[|quadro_i - quadro_{i-1} | > limiar \]
+O principal benefício desse algoritmo é ser rápido e computacionalmente barato, contudo, além de não conseguir lidar bem com ruído, mudanças bruscas de iluminação e movimentos periódicos no fundo, esse algoritmo faz com que um objeto que fique parado por mais de um quadro se torne parte do plano de fundo, fazendo com que isso seja considerado durante o processamento das informações da imagem.
+
+\subsection{Diferença Entre Quadro e o Fundo da Cena}
+Esse método é bastante simples também, difere do anterior no fato do fundo a ser calculado ser estático entre quadros. É usual que se defina o fundo como o quadro no instante $ t = 0 $, ou ainda efetuar edições na imagem utilizada como fundo para se obter o melhor resultado.
+
+Assim como o método da diferença entre quadros, a diferença entre o quadro e o fundo da cena é computacionalmente barato, porém sofre dos mesmos males de não
+conseguir lidar com ruído, mudanças bruscas de iluminação e movimentos periódicos dos objetos contidos no plano de fundo, contudo, esse algoritmo não sofre com a absorção de um objeto do primeiro plano pelo plano de fundo.
+
+\subsection{Modelo de mistura de gaussianas}
+
+Um modelo de mistura de gaussianas, ou (\textit{GMM - Gaussian Mixture Model}) é um modelo estocástico que modela classes, sem que se considerem informações temporais. Esse modelo probabilístico se mostrou bastante eficiente para se definir o que faz parte do plano de fundo de uma imagem, sendo uma das técnicas que obtém melhor resultado em subtração de fundo. Diversas implementações de BGS usando GMM foram efetuadas, dentre elas destacam-se \citen{Stauffer1999}, \citen{KaewTraKulPong2002}, \citen{Zivkovic2004} e \citen{Bouwmans2008}.
+
+A implementação usada nesse caso foi a proposta por \citen{Zivkovic2004} que, junto da implementação de \citen{KaewTraKulPong2002}, foi implementada na biblioteca OpenCV. O modelo proposto, parte do pressuposto que, na prática, em uma cena externa, a iluminação se altera lentamente (normalmente por condições de tempo) e em uma cena interna, de uma maneira rápida (ligar ou desligar uma lâmpada). Um novo objeto pode ser inserido em uma cena, ou removido dela. Em função disso, é necessário que exista um treinamento do modelo de plano de fundo para que haja uma adaptação às alterações do mesmo, adicionando novas amostras ou removendo antigas. Em função disso, o algoritmo propõe que, para cada alteração de uma amostra, o valor do plano de fundo seja novamente estimado, para que seja identificada a introdução de um novo objeto no primeiro plano ou a absorção de um objeto pelo plano de fundo.
 
 \section{Trabalhos Relacionados}
 
 \chapter{A Técnica Proposta}
 
-Esse trabalho foi concebido com uma premissa básica: ser de baixo custo. Por isso, durante a avaliação do equipamento utilizado, se chegou ao uso do Raspberry Pi, que é um computador de pequenas dimensões e custo (cerca de 200 reais, no Brasil). Apesar do baixo custo, essa especificação nos dá um poder de processamento limitado, quando o trabalho foi idealizado, o equipamento que existia era o Raspberry Pi B+, que vinha equipado de um processador de 700Mhz e 512MB de RAM. Em fevereiro de 2015 a Raspberry Pi Foundation anunciou o lançamento do Raspberry Pi 2, com um aumento considerável de capacidade computacional, mantendo o mesmo perfil de custo do projeto, conforme a Tabela~\ref{tbl:rpi}.
+\section{Motivação}
+
+Hoje em dia é bastante comum encontrar em Shoppings Centers sensores de estacionamento individuais, que indicam se uma vaga está ocupada ou não. Essa indicação muitas vezes economiza diversos minutos em busca de uma vaga para estacionar seu carro, principalmente quando estamos próximos das festas de final de ano. A solução usada nesses casos normalmente compreendem sensores de presença, infravermelho ou ultrassom e exigem que cada vaga seja monitorada por um sensor específico. No entanto, ao partirmos para estacionamentos descobertos (ou \textit{outdoor}), verificamos que não há sistema semelhante que venha a indicar vagas disponíveis e, devido à exposição às intempéries, a solução adotada em ambientes internos não é aplicável.
+
+Essa ausência de dispositivos indicativos de vagas de estacionamento é percebida nos estacionamentos descobertos da PUCRS, aonde algumas vagas são levemente deslocadas do restante do estacionamento e, muitas vezes, acabam sendo preteridas dada a dificuldade de se encontrar espaços vagos. Conforme pode ser visto na Figura~\ref{fig:esta}.
+
+\begin{figure}
+	\centering
+	\caption{Estacionamento E03 da PUCRS, visto do Prédio 99A}
+	\includegraphics[width=1.0\textwidth]{../../../Dropbox/__TG1/_images/esta}
+	\label{fig:esta}
+	\legend{Fonte: O Autor}
+\end{figure}
+
+A percepção desse problema, unida ao sucesso obtido com os sensores de estacionamentos internos motivou esse trabalho, que busca utilizar de visão computacional para identificar as vagas disponíveis no estacionamento em questão, mantendo uma premissa básica: ser de baixo custo. Por isso, durante a avaliação do equipamento utilizado, se chegou ao uso do Raspberry Pi, que é um computador de pequenas dimensões e custo (cerca de 200 reais, no Brasil). 
+
+\section{O Equipamento}
+
+O Raspberry Pi é um mini-computador desenvolvido no Reino Unido pela Raspberry Pi Foundation, com o propósito de promover o ensino de ciência da computação em escolas. Lançado em 2012, tornou-se um sucesso devido ao seu baixo custo, no Brasil, o modelo mais atual é vendido hoje por pouco mais de 200 reais.
+
+Inicialmente, esse projeto foi concebido para ser executado no Raspberry Pi B+, que foi lançado em 2014, contudo, em fevereiro de 2015, a Raspberry Pi Foundation lançou um novo modelo, chamado Rasberry Pi B Geração 2, com consideráveis melhorias, principalmente no que diz respeito a processamento e memória (ver tabela~\ref{tbl:rpi}). Considerando que os algoritmos aqui executados seriam consideravelmente custosos, o projeto foi repensado para fazer uso do novo equipamento.
 
 \begin{table}
 	\caption{Comparativo Raspberry Pi B+ e Raspberry Pi B Geração 2}
@@ -473,13 +709,17 @@ Esse trabalho foi concebido com uma premissa básica: ser de baixo custo. Por is
 			\textit{Recurso}  &   \textit{Raspberry Pi B+}  &   \textit{Raspberry Pi B Gen2} \\
 			\hline
 			\hline
-			Valor no lançamento & USD 35 & USD 35 \\
+			Valor & USD 25 & USD 35 \\
 			\hline
 			SOC & Broadcom BCM2835  & Broadcom BCM2836 \\
 			\hline
 			CPU & 700 MHz single-core ARM 1176JZF-S & 900 MHz quad-core ARM Cortex-A7 \\
 			\hline
-			Memory (SDRAM) & 512 MB & 1 GB \\
+			Memória (SDRAM) & 512 MB & 1 GB \\
+			\hline
+			Potência máxima & 9W & 9W \\
+			\hline
+			Sistema Operacional & GNU/Linux & GNU/Linux; Windows 10 \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -487,156 +727,84 @@ Esse trabalho foi concebido com uma premissa básica: ser de baixo custo. Por is
 	\label{tbl:rpi}
 \end{table}
 
+\begin{figure}
+	\centering
+	\caption{Raspberry Pi B+ Geração 2}
+	\includegraphics[width=0.6\textwidth]{../../../Dropbox/__TG1/_images/pi2}
+	\label{fig:rpi}
+	\legend{Fonte: Raspberry Pi Foundation}
+\end{figure}
+
+
+O dispositivo óptico utilizado no projeto foi uma Raspberry Pi NoIR camera (figura ~\ref{fig:picam}), que é uma câmera com sensor CMOS OmniVision OV5647, com resolução QSXGA (5-megapixel), com modificação "NoIR", ou seja, sem o filtro infra-vermelho, permitindo que a câmera capture ondas com comprimento próximos ao infra-vermelho (700 - 1000nm).
+
+\begin{figure}
+	\centering
+	\caption{Raspberry Pi NoIR Camera}
+	\includegraphics[width=0.6\textwidth]{../../../Dropbox/__TG1/_images/picamera}
+	\label{fig:picam}
+	\legend{Fonte: Raspberry Pi Foundation}
+\end{figure}
+
+No quesito software, o ambiente preparado executava Raspbian GNU/Linux e o projeto foi desenvolvido em C++ e Python, fazendo uso da biblioteca para visão computacional OpenCV.
+
+\begin{figure}
+	\centering
+	\caption{Protótipo utilizado}
+	\includegraphics[width=1.0\textwidth]{../../../Dropbox/__TG1/_images/setup}
+	\label{fig:setup}
+	\legend{Fonte: O Autor}
+\end{figure}
+
+\section{Preparação do sistema}
+
+
+
 \section{Proposta Original}
 
-Apesar de haver um ganho considerável em processamento, as características do equipamento eram o principal limitante dos algoritmos e técnicas a serem utilizados, originalmente, durante a especificação prevista no Trabalho de Graduação 1 (Anexo~\ref{tg1}) previam o uso de \textit{Haar-Cascades}, conforme proposto por \citen{Oliveira2008} e \textit{Background Subtraction}. 
+Partindo da imagem de uma câmera calibrada, com todos os parâmetros conhecidos, cujas regiões de interesse (ROIs), no caso, as vagas, seriam manualmente definidas, seria feita a detecção da ocupação das mesmas utilizando-se  \textit{Haar-Cascades}, conforme proposto por \citen{Oliveira2008} e \textit{Background Subtraction}, que pode ser verificado no Trabalho de Graduação 1 (Anexo~\ref{tg1}).
 
-\textit{Haar-Cascades} se mostrou uma técnica ineficiente já que não foi possível encontrar um conjunto de treinamento suficiente para o cenário em questão e, inicialmente, gerar um novo conjunto de treinamento estava fora de cogitação pela carga computacional necessária. Apesar dessa técnica ser bem eficiente em identificar por padrões treinados em imagens, infelizmente, não dispondo de um conjunto de treinamento adequado, se mostra ineficiente.
+\textit{Haar-Cascades} se mostrou ineficiente na solução desse problema uma vez que não foi possível encontrar um conjunto de treinamento suficiente para o cenário em questão e, inicialmente, gerar um novo conjunto de treinamento estava fora de cogitação pela carga computacional necessária. Apesar dessa técnica ser bem eficiente em identificar por padrões treinados em imagens, infelizmente, não dispondo de um conjunto de treinamento adequado, se mostra ineficiente.
 
-O uso de \textit{background subtraction}, que também foi um dos algoritmos que foram considerados originalmente, foi amplamente testado buscando encontrar um algoritmo e configurações que fossem pouco suscetíveis à variações de luminosidade (pela presença de nuvens ou pelo passar das horas do dia). Nesse quesito foram avaliados diversos algoritmos consagrados de BGS: diferenças entre quadros e \textit{mixture of gaussians} conforme proposto por \citen{Zivkovic2004}. Sendo que, para o cenário em questão a última se mostrou mais eficiente, porém com uma alta carga computacional, principalmente quando executado no Raspberry Pi, por isso essa técnica também foi relegada.
+O uso de \textit{background subtraction}, que também foi um dos algoritmos que foram considerados originalmente, foi amplamente testado buscando encontrar um algoritmo e configurações que fossem pouco suscetíveis à variações de luminosidade (pela presença de nuvens ou pelo passar das horas do dia). Nesse quesito foram avaliados diversos algoritmos consagrados de BGS: diferenças entre quadros e \textit{mixture of gaussians} conforme proposto por \citen{Zivkovic2004}. Sendo que, para o cenário em questão a última se mostrou mais eficiente, porém com uma alta carga computacional, principalmente quando executado no \textit{hardware} destino, tornando o desempenho inaceitável para o projeto em questão, fazendo que o mesmo fosse relegado.
 
 
 \section{Segunda Implementação}
 
+Uma vez avaliada a inviabilidade técnica da proposta inicial, foi feita uma nova análise do problema, uma vez que a utilização padrão do sistema é bastante simples: identificar a presença de um automóvel em uma determinada região de pixeis em um determinado instante de tempo com a maior confiabilidade possível. Apesar da especificação ser consideravelmente simples, sua aplicação depende de um processamento prévio, ou que sejam assumidas premissas que reduziriam a genericidade da solução. 
+Em razão disso, se segmentou o problema em duas partes distintas: identificação do estado inicial do estacionamento e a alteração dos estados das vagas. Essa divisão se fez necessária devido ao fato de que em um caso real, dificilmente encontraremos um estacionamento momentaneamente vazio, então é preciso identificar qual a situação de cada vaga ao inicializar o sistema, além de que o conhecimento do estado anterior da vaga pode vir a ser útil ao se definir o novo estado.
 
+Para identificar o estado inicial do estacionamento, foi verificada a solução proposta por \citen{True2007}, que desenvolveu um sistema de detecção de ocupação de vagas de estacionamento por meio de imagens estáticas. Nessa solução a identificação da ocupação das vagas de estacionamento é feita basicamente por meio da comparação de histograma dos canais de crominância (a* e b*) do espaço de cores CIELAB entre a região de interesse que é delimitada por uma vaga e um espaço sabidamente desocupado. Nessa proposta, True utilizou mecanismos de aprendizado de máquina para aumentar a confiabilidade dos resultados, além de detecção de \textit{features} nessas regiões.
 
+\subsection{Preparação do sistema}
 
+\subsection{Detecção de ocupação de vagas por análise estática}
 
 \chapter{Resultados}
 
 \chapter{Conclusões}
 
+\chapter{Trabalhos Futuros}
 
-%\section{Figuras e tabelas}
-%
-%Esta seção faz referência às Figuras~\ref{fig:estrutura},~\ref{fig:ex1} e~\ref{fig:ex2}, a título de exemplo. A primeira figura apresenta a estrutura de uma figura. A \emph{descrição} deve aparecer \textbf{acima} da figura. Abaixo da figura, deve ser indicado a origem da imagem, mesmo se essa for apenas os autores do texto.
-%
-%A Figura~\ref{fig:ex1} representa o caso mais comum, onde a figura propriamente dita é importada de um arquivo (neste exemplo em formato \texttt{eps} ou \texttt{pdf}. Veja a seção \ref{sec:fig_format}). A Figura~\ref{fig:ex2} exemplifica o uso do environment \texttt{picture}, para desenhar usando o próprio~\LaTeX.
-%
-%\begin{figure}[h]
-%    \caption{Descrição da Figura deve ir no topo}
-%    \begin{center}
-%        % Aqui vai um includegraphics , um picture environment ou qualquer
-%        % outro comando necessário para incorporar o formato de imagem
-%        % utilizado.
-%        \begin{picture}(100,100)
-%                \put(0,0){\line(0,1){100}}
-%                \put(0,0){\line(1,0){100}}
-%                \put(100,100){\line(0,-1){100}}
-%                \put(100,100){\line(-1,0){100}}
-%                \put(10,50){Uma Imagem}
-%        \end{picture}
-%    \end{center}
-%    \label{fig:estrutura}
-%    \legend{Fonte: Os Autores}
-%\end{figure}
-%
-%\begin{figure}
-%    \caption{Exemplo de figura importada de um arquivo e também exemplo de caption muito grande que ocupa mais de uma linha na Lista~de~Figuras}
-%    \centerline{\includegraphics[width=8em]{fig}}
-%    \legend{Fonte: Os Autores}
-%    \label{fig:ex1}
-%\end{figure}
-%
-%% o `[h]' abaixo é um parâmetro opcional que sugere que o LaTeX coloque a
-%% figura exatamente neste ponto do texto. Somente preocupe-se com esse tipo
-%% de formatação quando o texto estiver completamente pronto (uma frase a mais
-%% pode fazer o LaTeX mudar completamente de idéia sobre onde colocar as
-%% figuras e tabelas)
-%%\begin{figure}[h]
-%\begin{figure}
-%    \caption{Exemplo de figura desenhada com o environment \texttt{picture}.}
-%    \begin{center}
-%        \setlength{\unitlength}{.1em}
-%        \begin{picture}(100,100)
-%                \put(20,20){\circle{20}}
-%                \put(20,20){\small\makebox(0,0){a}}
-%                \put(80,80){\circle{20}}
-%                \put(80,80){\small\makebox(0,0){b}}
-%                \put(28,28){\vector(1,1){44}}
-%        \end{picture}
-%    \end{center}
-%    \legend{Fonte: Os Autores}
-%    \label{fig:ex2}
-%\end{figure}
-%
-%Tabelas são construídas com praticamente os mesmos comandos. Ver a tabela \ref{tbl:ex1}.
-%
-%\begin{table}[h]
-%    \caption{Uma tabela de Exemplo}
-%    \begin{center}
-%        \begin{tabular}{c|c|p{5cm}}
-%            \textit{Col 1}  &   \textit{Col 2}  &   \textit{Col 3} \\
-%            \hline
-%            \hline
-%            Val 1           &   Val 2           & Esta coluna funciona como um parágrafo, tendo uma margem definida em 5cm. Quebras de linha funcionam como em qualquer parágrafo do tex. \\
-%            Valor Longo     & Val 2             & Val 3 \\
-%            \hline
-%        \end{tabular}
-%    \end{center}
-%    \legend{Fonte: Os Autores}
-%    \label{tbl:ex1}
-%\end{table}
-%
-%\subsection{Formato de Figuras}
-%\label{sec:fig_format}
-%
-%O LaTeX permite utilizar vários formatos de figuras, entre eles \emph{eps}, \emph{pdf}, \emph{jpeg} e \emph{png}. Programas de diagramação como Inkscape (e mesmo LibreOffice) permitem gerar arquivos de imagens vetoriais que podem ser utilizados pelo LaTeX sem dificuldade. Pacotes externos permitem utilizar SVG e outros formatos.
-%
-%Dia e xfig são programas utilizados por dinossauros para gerar figuras vetoriais. Se possível, evite-os.
-%
-%\chapter{Classificação dos etc.}
-%
-%O formato adotado pela ABNT prevê apenas três níveis (capítulo, seção e subseção). Assim, \texttt{\char'134subsubsection} não é aconselhado.
-%
-%\section{Sobre as referências bibliográficas}
-%
-%A classe \emph{iiufrgs} faz uso do pacote \emph{abnTeX2} com algumas alterações
-%feitas por Sandro Rama Fiorini. Culpe ele se algo der errado. Agradeça a ele
-%pelo que der certo. As modificações dão uma camada de tinta NATBIB-style,
-%já que o abntex2 usa uns comandos de citação feitos para alienígenas de 5 braços 
-%wtf. Exemplos de citação:
-%
-%\begin{itemize}
-%    \item \emph{cite}: Unicórnios são verdes \cite{Adams2009Conceptual};
-%    \item \emph{citep}:Unicórnios são verdes \citep{Winston1987taxonomy};
-%    \item \emph{citet}: Segundo \citet{Adams2009Conceptual}, unicórnios são
-%                        verdes.
-%    \item \emph{citen or citenum}: Segundo \citen{Adams2009Conceptual},
-%        unicórnios são verdes.
-%    \item \emph{citeauthor e citeyearpar}: Segundo artigos de
-%        \citeauthor{Adams2009Conceptual} , unicórnios são verdes 
-%        \citeyearpar{Adams2009Conceptual}.
-%
-%\end{itemize}
-%
-%O estilo abnt fornecido antigamente pelo UTUG não é mais recomendado, pois não
-%produz saída de acordo com as exigências da biblioteca.
-%
-%Recomenda-se o uso de bibtex para gerenciar as referências (veja o arquivo
-%biblio.bib).
-%
-%% e aqui vai a parte principal
-%%
-%% \chapter{Estado da arte}
-%% \chapter{Mais estado da arte}
-%% \chapter{A minha contribuição}
-%% \chapter{Prova de que a minha contribuição é válida}
-%% \chapter{Conclusão}
-%
-%% referencias
-%% aqui será usado o environment padrao `thebibliography'; porém, sugere-se
-%% seriamente o uso de BibTeX e do estilo abnt.bst (veja na página do
-%% UTUG)
-%%
-%% observe também o estilo meio estranho de alguns labels; isso é
-%% devido ao uso do pacote `natbib', que permite fazer citações de
-%% autores, ano, e diversas combinações desses
-
+\nocite{Sobral2014}
+\nocite{6264659}
+\nocite{KaewTraKulPong2002}
+\nocite{BinZabawi2013}
+\nocite{Lin2006}
 \bibliographystyle{abntex2-alf}
 \bibliography{export}
 
 \annex
+\chapter{Autorização para obtenção de imagens}
+\label{autoriz}
+\begin{figure}[h]
+	\caption{Reprodução da autorização de captura de imagens da PUCRS}
+	\centering
+	\includegraphics[width=1.0\textwidth]{../../../Dropbox/__TG1/_images/autor}
+	\label{fig:autor}
+\end{figure}
+
+
 \chapter{Trabalho de Graduação 1}
 \label{tg1}
 
