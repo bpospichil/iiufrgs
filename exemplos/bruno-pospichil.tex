@@ -133,24 +133,47 @@ Seremos limitados por nossa habilidade de processar esta informação.''\\}
 
 % agradecimentos
 \chapter*{Agradecimentos}
-Agradeço ao \LaTeX\ por não ter vírus de macro\ldots
+Primeiramente, aos meus pais, Elizete e Claudio e ao meu irmão, Ânderson, pelo amor e apoio. O caminho até aqui não foi fácil, tampouco curto, porém com o apoio de vocês se tornou algo atingível. Não tenho dúvidas que se não fosse por de vocês, não estaria aqui neste momento.
+
+Aos meus familiares que, nem sempre próximos, mas com palavras de apoio e com imprescindível contribuição na formação do meu caráter, se hoje posso almejar um belo futuro, em grande parte vocês são os responsáveis.
+
+A UFRGS, pela oportunidade de conviver com alguns dos mais respeitados pesquisadores do Brasil, se hoje chego com portas abertas na maior parte das empresas é pela qualidade do ensino que é ministrado.
+
+Ao meu orientador, Prof. Claudio, pelo suporte e apoio durante a confecção do Trabalho de Graduação, além da compreensão quando os prazos não estavam sendo atendidos rigorosamente.
+
+Aos demais professores, participar desta troca de conhecimentos com vocês foi um privilégio.
+
+Aos meus colegas do Instituto de Pesquisas Eldorado e da HP Brasil, pela parceria e compreensão nos momentos que necessitei me ausentar ou me dedicar a alguma tarefa fora do escopo. Gostaria de estender o agradecimento às demais empresas que eu fiz parte durante a graduação: T\&T, ESOS e CWI.
+
+Ao Instituto de Pesquisas Eldorado, por incentivar e fomentar a pesquisa relacionada a esse projeto. 
+
+Aos meus colegas, que tornaram essa etapa da minha vida muito mais divertida.
+
+E a todos que participaram direta ou indiretamente de todas as etapas que fizeram parte da minha formação, o meu muito obrigado.
+
 
 % resumo na língua do documento
 \begin{abstract}
 Este trabalho busca validar algumas técnicas para solucionar o problema da detecção de ocupação de vagas de estacionamento. A solução utiliza visão computacional e tem baixo custo.
 
-Serão apresentadas duas propostas a serem validades: a aplicabilidade em implementar em um  hardware minimalista e na capacidade de detecção. 
+Serão apresentadas duas propostas a serem validades: a aplicabilidade em implementar em um hardware minimalista e na capacidade de detecção. 
 
-A primeira vale-se do uso de classificadores Haar e subtração de fundo para identificar alterações na região de uma vaga. Já a segunda, faz uma análise estática quadro-a-quadro do estacionamento e, utilizando comparação entre histogramas, busca detectar a ocupação da vaga. 
+A primeira vale-se do uso de classificadores Haar e subtração de fundo para identificar alterações na região de uma vaga. Já a segunda, faz uma análise quadro-a-quadro do estacionamento e, utilizando comparação entre histogramas, busca detectar a ocupação da vaga. 
 
-Na implementação do projeto foram utilizadas capturas de um hardware real. Contudo, a aplicação ainda não foi validada em tempo real. O equipamento utilizado foi um Raspberry Pi B de segunda geração
+Na implementação do projeto foram utilizadas capturas de um hardware real, um minicomputador Raspberry Pi B de segunda geração e uma câmera sem filtro infravermelho.
 \end{abstract}
 
 % resumo na outra língua
 % como parametros devem ser passados o titulo e as palavras-chave
 % na outra língua, separadas por vírgulas
 \begin{englishabstract}{Low-Cost System to Detect Parking Spaces Using Computer Vision}{Computer vision, image processing, histogram comparison, parking spot, vehicles}
-This paper aims to validate some techiniques to solve the parking spot occupancy detection problem, applying a low-cost solution, using computer vision. Two proposals will be validated considering the applicability to implement on a minimal hardware and the detection capacity. The first one uses Haar Classifiers and Background Subtraction to identify modifications on the spot area. The second makes a static analsys from the parking lot frame-by-frame and using histogram comparison aims to detect the occupancy. During the validation the captures used was taken using the real hardware, but, the application was not validated in real time. The used hardware as a Raspberry Pi B 2nd generation.
+This paper aims to validate some techiniques to solve the parking spot occupancy detection problem, applying a low-cost solution, using computer vision.
+
+Two proposals will be validated considering the applicability to implement on a minimal hardware and the detection capacity.
+
+The first one uses Haar Classifiers and Background Subtraction to identify modifications on the spot area. The second makes a analsys from the parking lot frame-by-frame and using histogram comparison aims to detect the occupancy. 
+
+During the validation the captures used was taken using the real hardware, a mini-computer Raspberry Pi B 2nd generation with a NoIR camera.
 \end{englishabstract}
 
 % lista de abreviaturas e siglas
@@ -179,6 +202,7 @@ This paper aims to validate some techiniques to solve the parking spot occupancy
         \item[QXGA] Quantum Extended Graphics Array
         \item[XML] Extensible Markup Language
         \item[UML] Unified Modeling Language
+        \item[FPS] Frames per second
     \end{listofabbrv}
 
 % idem para a lista de símbolos
@@ -200,35 +224,25 @@ This paper aims to validate some techiniques to solve the parking spot occupancy
 
 % introducao
 \chapter{Introdução}
-Visão computacional é uma das áreas mais fascinantes dentro dos conceitos mais atuais que estão sendo estudados em computação: permitir que um sistema tome decisões guiadas por meio de um estimulo óptico é, possivelmente um dos campos da computação que mais irá se desenvolver nos próximos anos. Sistemas de detecção de saída de pista, controle de qualidade de produtos, sistemas de detecção de mísseis e veículos autônomos são apenas alguns exemplos de aplicações para a visão computacional.
+Um dos maiores problemas das metrópoles atualmente é, sem dúvidas, o gerenciamento de uma crescente frota de veículos, que dobrou nos últimos dez anos. Com esse crescimento, se torna cada vez mais complicado encontrar um espaço para deixar seu carro, inclusive em espaços reservados para esse fim - os estacionamentos. 
 
-Nesse trabalho, procurou-se utilizar conceitos de visão computacional para auxiliar em uma tarefa corriqueira: buscar por uma vaga de estacionamento. Apesar de simples, sabemos que atualmente estamos levando cada vez mais tempo para localizar um espaço para deixar o carro em segurança, inclusive em estacionamentos privados.
+Por esse motivo, não é incomum encontrarmos sistemas que buscam facilitar a tarefa de encontrar uma vaga livre: em shoppings centers é comum se deparar com sensores individuais, com indicação se a vaga está disponível (verde), ocupada (vermelho) ou se é especial (azul). No entanto, ao migrarmos para estacionamentos descobertos, essa solução não se torna aplicável, devido a sensibilidade dos equipamentos empregados. Inclusive, hoje não encontramos soluções comerciais para tal fim.
 
-
-
-Um dos maiores problemas das metrópoles atualmente é, sem dúvidas, o gerenciamento de uma crescente frota de veículos, que dobrou nos últimos dez anos. Com esse crescimento, se torna cada vez mais complicado encontrar um espaço para deixar seu carro, inclusive em espaços reservados para esse fim - os estacionamentos. Em razão disso, cada vez mais encontramos soluções que buscam reduzir ao máximo o tempo de busca por uma vaga, é comum encontrar em shoppings soluções que indicam a ocupação individual de cada vaga, com luzes características, em estacionamentos internos. No entanto, quando o espaço está sujeito às intempéries, não encontramos sistemas semelhantes.
-
-Esse trabalho busca efetuar uma breve revisão de alguns conceitos de visão computacional, relevantes no contexto do sistema de detecção de vagas de estacionamento. Primeiramente será feito um breve resumo de modelos de câmeras, imperfeições, calibração e mudança de perspectiva. Em seguida será efetuada uma passagem por espaços e comparação por análise de histogramas.
-
-Ainda nos conceitos teóricos, passaremos por reconhecimento de padrões: classificadores Haar e faremos um resumo de algumas técnicas de subtração de fundo, utilizando diferença entre quadros e misturas de gaussianas.
-
-
+Esse trabalho se propõe a validar uma possíveis soluções para implementar um sistema de detecção de vagas de estacionamento utilizando visão computacional, que atualmente é uma das áreas mais promissoras dentro da computação. Além disso, a solução será concebida para ser aplicável em um Raspberry Pi, tornando-a de baixo custo: o conjunto dos equipamentos necessários custa cerca de 80 dólares americanos.
 
 \chapter{Fundamentação Teórica e Trabalhos Relacionados}
 
 \section{Modelos de Câmeras}
 
 \subsection{Câmera Esteonopeica (\textit{pinhole})}
-O  modelo  de  câmera  estenopeica  é  o  mais  simples  existente,  proposto  por  Filippo Brunelleschi, no início do século XV, é matematicamente conveniente e, apesar de sua simplicidade, provê uma aproximação aceitável do processo de captura de imagem.
-
-Imagine uma caixa, aonde existe um pequeno furo (do grego \textit{stenopo}, por isso estenopeica) no centro de uma das faces e sua face oposta sendo substituída por uma superfície translúcida. Se você colocar essa caixa em uma sala com pouca iluminação, com alguma fonte luminosa em frente à superfície com o furo, a imagem dessa fonte luminosa será exibida invertida na face translúcida, conforme pode ser visto na Figura~\ref{fig:image1}.
+O  modelo  de  câmera  estenopeica  é  o  mais  simples  existente,  proposto  por  Filippo Brunelleschi, no início do século XV, é matematicamente conveniente e, apesar de sua simplicidade, provê uma aproximação aceitável do processo de captura de imagem. Imagine uma caixa, aonde existe um pequeno furo (do grego \textit{stenopo}, por isso estenopeica) no centro de uma das faces e sua face oposta sendo substituída por uma superfície translúcida. Se você colocar essa caixa em uma sala com pouca iluminação, com alguma fonte luminosa em frente à superfície com o furo, a imagem dessa fonte luminosa será exibida invertida na face translúcida, conforme pode ser visto na Figura~\ref{fig:image1}.
 
 \begin{figure}
 \centering
 \caption{Modelo de câmera estenopeica}
 \includegraphics{../../../Dropbox/__TG1/_images/image1}
 \label{fig:image1}
-\legend{Fonte: \citeauthor{Forsyth2011}}
+\legend{Fonte: \cite{Forsyth2011}}
 \end{figure}
 
 Esse modelo define um mapeamento geométrico do mundo 3D para o plano de imagem 2D, conhecido como projeção perspectiva, que cria uma imagem invertida e, as vezes é conveniente se pensar numa imagem virtual, criada em um plano entre a face contendo o furo e a imagem original, à mesma distância entre essa mesma face e o plano da imagem. Conforme o contexto, pode ser útil pensar na imagem virtual ou na real.
@@ -240,7 +254,7 @@ A projeção em perspectiva gera alguns efeitos na imagem projetada: o tamanho a
 	\caption{Distorção de tamanho}
 	\includegraphics{../../../Dropbox/__TG1/_images/image2}
 	\label{fig:image2}
-	\legend{Fonte: \citeauthor{Forsyth2011}}
+	\legend{Fonte: \cite{Forsyth2011}}
 \end{figure}
 
 Outro efeito gerado na projeção de imagem é que duas retas paralelas no mundo, isso é, cuja intersecção ocorreria em uma distância infinita, se intersectem no horizonte da imagem. Tais coordenadas da intersecção na imagem são chamados pontos de fuga (\textit{vanishing points}). O conjunto dos pontos de fuga correspondentes a retas paralelas em um plano formam uma reta, conhecida como reta de fuga (\textit{vanishing line}).
@@ -250,7 +264,7 @@ Outro efeito gerado na projeção de imagem é que duas retas paralelas no mundo
 	\caption{Retas de fuga}
 	\includegraphics{../../../Dropbox/__TG1/_images/image3}
 	\label{fig:image3}
-	\legend{Fonte: \citeauthor{Hartley2003}}
+	\legend{Fonte: \cite{Hartley2003}}
 \end{figure}
 
 \subsection{Parâmetros de Câmeras}
@@ -263,17 +277,16 @@ Definimos como parâmetros de câmera as informações que são responsáveis pe
 	\caption{Modelo de câmera estenopeica}
 	\includegraphics{../../../Dropbox/__TG1/_images/image4}
 	\label{fig:image4}
-	\legend{Fonte: \citeauthor{Hartley2003}}
+	\legend{Fonte: \cite{Hartley2003}}
 \end{figure}
 
 Consideremos o modelo representado na Figura~\ref{fig:image4}, aonde \texttt{C} representa o centro de projeção, também conhecido como centro da câmera ou centro óptico. Vamos definir um sistema de coordenadas onde \texttt{C} seja a origem, e consideraremos o plano \texttt{Z = f}, que é conhecido como plano da imagem ou plano focal e está posicionado em frente ao centro de projeção e \texttt{f} é a distância focal. A linha que passa pelo centro da câmera e é perpendicular ao plano da imagem é chamada de eixo principal ou eixo óptico e o ponto onde esse eixo encontra o plano da imagem é conhecido como ponto principal (\texttt{p}).
 
-A partir da Figura~\ref{fig:image4}, temos que um ponto no espaço de coordenadas $(X, Y, Z)^T$ é mapeado, por semelhança de triângulos, para um ponto no plano da imagem $ (f\dfrac{X}{Z}, f\dfrac{Y}{Z}) $.
-Suprimindo a coordenada final da imagem, temos que $ (X, Y, Z)^T \mapsto (f\dfrac{X}{Z}, f\dfrac{Y}{Z})^T $ descreve  a  projeção  de  pontos  do  mundo  para  coordenadas  da  imagem.  Isso  é, mapeando de um espaço 3D para um 2D.
+A partir da Figura~\ref{fig:image4}, temos que um ponto no espaço de coordenadas $(X, Y, Z)^T$ é mapeado, por semelhança de triângulos, para um ponto no plano da imagem $ (f\dfrac{X}{Z}, f\dfrac{Y}{Z}) $. Portanto, temos que $ (X, Y, Z)^T \mapsto (f\dfrac{X}{Z}, f\dfrac{Y}{Z})^T $ descreve  a  projeção  de  pontos  do  mundo  para  coordenadas  da  imagem.  Isso  é, mapeando de um espaço 3D para um 2D.
 
 Se o mundo e os pontos da imagem são representados por vetores homogêneos, então, a projeção é facilmente expressada como uma relação linear de suas coordenadas homogêneas. A equação anterior pode ser escrita como uma multiplicação matricial:
 
-\[\begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \mapsto \begin{pmatrix} fX \\ fY \\ fZ \end{pmatrix} = \begin{bmatrix} f &  &  & 0 \\ & f & & 0 \\ & & 1 & 0 \end{bmatrix} \begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \]
+\[\begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \mapsto \begin{pmatrix} fX \\ fY \\ fZ \end{pmatrix} = \begin{bmatrix} f & 0 & 0 & 0 \\ 0 & f & 0 & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} \begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \]
 
 Na matriz acima, assumimos que a origem das coordenadas no plano da imagem é o ponto principal. No entanto, isso pode não ser verdade, por isso, podemos considerar que $ (X, Y, Z)^T \mapsto (f\dfrac{X}{Z} + p_x, f\dfrac{Y}{Z} + p_y)^T $ aonde $ (p_x, p_y)^T $ são as coordenadas do ponto principal, conforme a figura~\ref{fig:image5}.
 
@@ -282,14 +295,14 @@ Na matriz acima, assumimos que a origem das coordenadas no plano da imagem é o 
 	\caption{Sistema de coordenadas da imagem e da câmera}
 	\includegraphics{../../../Dropbox/__TG1/_images/image5}
 	\label{fig:image5}
-	\legend{Fonte: \citeauthor{Hartley2003}}
+	\legend{Fonte: \cite{Hartley2003}}
 \end{figure}
 
 Assim, podemos escrever a equação em coordenadas homogêneas, chegando a
-\[\begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \mapsto \begin{pmatrix} fX+Zp_x \\ fY+Zp_y \\ fZ \end{pmatrix} = \begin{bmatrix} f &  & p_x & 0 \\ & f & p_y & 0 \\ & & 1 & 0 \end{bmatrix} \begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \]
-aonde definimos
-\[K = \begin{bmatrix} f &  & p_x & 0 \\ & f & p_y & 0 \\ & & 1 & 0 \end{bmatrix}\]
-ou, na forma concisa: $ x = K[I|0]x_{cam}$.
+\[\begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \mapsto \begin{pmatrix} fX+Zp_x \\ fY+Zp_y \\ fZ \end{pmatrix} = \begin{bmatrix} f & 0  & p_x & 0 \\ 0 & f & p_y & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} \begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} \].
+Aonde definimos
+\[K = \begin{bmatrix} f & 0  & p_x  \\ 0 & f & p_y \\ 0 & 0 & 1\end{bmatrix}\]
+Ou, na forma concisa: $ x = K[I|0]x_{cam}$.
 
 A matriz $ K $ é conhecida como \textit{matriz de calibração de câmera}. Na forma concisa, assumimos que a câmera estará posicionada na origem do sistema de coordenadas, com o eixo principal apontando para fora do eixo $ x $ e o ponto $ x_{cam} $ é definido nesse sistema de coordenadas.
 
@@ -302,7 +315,7 @@ Os parâmetros extrínsecos relacionam o sistema de coordenadas da câmera com o
 	\caption{Transformação entre o sistema de coordenadas da câmera e do mundo}
 	\includegraphics{../../../Dropbox/__TG1/_images/image6}
 	\label{fig:image6}
-	\legend{Fonte: \citeauthor{Hartley2003}}
+	\legend{Fonte: \cite{Hartley2003}}
 \end{figure}
 
 Sendo $ \widetilde{X} $ um vetor não homogêneo representando um ponto no sistema de coordenadas do mundo e $ \widetilde{X}_{cam} $ representando o mesmo ponto no sistema de coordenadas da câmera, podemos escrever $ \widetilde{X}_{cam} = R(\widetilde{X} - \widetilde{C}) $ , aonde $ \widetilde{C} $ representa as coordenadas do centro da câmera no sistema de coordenadas do mundo e R é uma matriz $ 3 \times 3 $ representando a orientação do sistema de coordenadas da câmera, ou seja:
@@ -314,7 +327,7 @@ Sendo $ \widetilde{X} $ um vetor não homogêneo representando um ponto no siste
 0 & 1 \end{bmatrix}
 \textbf{X}  \]
 
-Que, por sua vez, unindo com a matriz de calibração da câmera, temos que \[x = KR[I|-\widetilde{C}]\textbf{X} \] onde \textbf{X} é dado no sistema de coordenadas do mundo.
+Que, por sua vez, unindo com a matriz de calibração da câmera, temos que $ x = KR[I|-\widetilde{C}]\textbf{X} $ onde $ X $ é dado no sistema de coordenadas do mundo.
 
 Vemos que em uma câmera estenopeica $ P = KR[I|-\widetilde{C}] $ temos nove graus de liberdade: três para $ K(f, p_x, p_y) $, três para $ R $ e três para $ \widetilde{C} $. Os parâmetros de $K$ são conhecidos como \textit{parâmetros internos da câmera}, os
 parâmetros $R$ e $\widetilde{C}$ relacionam a orientação da câmera e sua posição no sistema de coordenadas do mundo e são chamados \textit{parâmetros externos}.
@@ -327,9 +340,6 @@ Os parâmetros intrínsecos e extrínsecos descritos anteriormente fornecem a de
 até aqui. Considerando que estas são geradas pelo processo construtivo da lente, podemos considerá-las como um tipo específico de parâmetros intrínsecos.
 
 De acordo com \citen{Hartley2003}, a modelagem exata das lentes é uma tarefa complexa, sendo que dessas imperfeições, a distorção radial (ou distorção barril) é a mais relevante em ser corrigida. Essa distorção provoca que uma reta no sistema de coordenadas do mundo seja projetada com uma curvatura no plano da imagem.
-
-Estamos fazer.
-
 
 \begin{figure}
 	\centering
@@ -346,7 +356,7 @@ Estamos fazer.
 		\label{fig:image7b}
 	\end{subfigure}
 	\label{fig:image7}
-	\legend{Fonte: \citeauthor{Morvan2009}}
+	\legend{Fonte: \cite{Morvan2009}}
 \end{figure}
 
 De acordo com \citen{Morvan2009}, a relação entre a posição dos pixeis na imagem distorcida $ (x_d, y_d)^T $ e a imagem corrigida $ (x_u, y_u)^T $ é definida por
@@ -394,13 +404,13 @@ chegando ao sistema de equações $ 12\times12 $.
 
 \[
 \begin{bmatrix}
-X_1 & X_1 & X_1 & 1 & 0 & 0 & 0 & 0 & -u_1X_1 & -u_1Y_1 & -u_1Z_1 & -u_1 \\
-0 & 0 & 0 & 0 & X_1 & X_1 & X_1 & 1 & -v_1X_1 & -v_1Y_1 & -v_1Z_1 & -v_1 \\
-X_2 & X_2 & X_2 & 1 & 0 & 0 & 0 & 0 & -u_2X_2 & -u_2Y_2 & -u_2Z_2 & -u_2 \\
-0 & 0 & 0 & 0 & X_2 & X_2 & X_2 & 1 & -v_2X_2 & -v_2Y_2 & -v_2Z_2 & -v_2 \\
+X_1 & Y_1 & Z_1 & 1 & 0 & 0 & 0 & 0 & -u_1X_1 & -u_1Y_1 & -u_1Z_1 & -u_1 \\
+0 & 0 & 0 & 0 & X_1 & Y_1 & Z_1 & 1 & -v_1X_1 & -v_1Y_1 & -v_1Z_1 & -v_1 \\
+X_2 & Y_2 & Z_2 & 1 & 0 & 0 & 0 & 0 & -u_2X_2 & -u_2Y_2 & -u_2Z_2 & -u_2 \\
+0 & 0 & 0 & 0 & X_2 & Y_2 & Z_2 & 1 & -v_2X_2 & -v_2Y_2 & -v_2Z_2 & -v_2 \\
 \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-X_n & X_n & X_n & 1 & 0 & 0 & 0 & 0 & -u_nX_n & -u_nY_n & -u_nZ_n & -u_n \\
-0 & 0 & 0 & 0 & X_n & X_n & X_n & 1 & -u_nX_n & -u_nY_n & -u_nZ_n & -v_n 
+X_n & Y_n & Z_n & 1 & 0 & 0 & 0 & 0 & -u_nX_n & -u_nY_n & -u_nZ_n & -u_n \\
+0 & 0 & 0 & 0 & X_n & Y_n & Z_n & 1 & -u_nX_n & -u_nY_n & -u_nZ_n & -v_n 
 \end{bmatrix}
 \begin{pmatrix}m_{11} \\ m_{12} \\ m_{13} \\ m_{14} \\ m_{21} \\ m_{22} \\ m_{23} \\ m_{24} \\ m_{31} \\ m_{32} \\ m_{33} \\ m_{34} \end{pmatrix} = 0
 \]
@@ -409,13 +419,13 @@ Uma das características desse sistema é que múltiplos da matriz geram a mesma
 
 \[
 \begin{bmatrix}
-X_1 & X_1 & X_1 & 1 & 0 & 0 & 0 & 0 & -u_1X_1 & -u_1Y_1 & -u_1Z_1 \\
-0 & 0 & 0 & 0 & X_1 & X_1 & X_1 & 1 & -v_1X_1 & -v_1Y_1 & -v_1Z_1 \\
-X_2 & X_2 & X_2 & 1 & 0 & 0 & 0 & 0 & -u_2X_2 & -u_2Y_2 & -u_2Z_2 \\
-0 & 0 & 0 & 0 & X_2 & X_2 & X_2 & 1 & -v_2X_2 & -v_2Y_2 & -v_2Z_2 \\
+X_1 & Y_1 & Z_1 & 1 & 0 & 0 & 0 & 0 & -u_1X_1 & -u_1Y_1 & -u_1Z_1 \\
+0 & 0 & 0 & 0 & X_1 & Y_1 & Z_1 & 1 & -v_1X_1 & -v_1Y_1 & -v_1Z_1 \\
+X_2 & Y_2 & Z_2 & 1 & 0 & 0 & 0 & 0 & -u_2X_2 & -u_2Y_2 & -u_2Z_2 \\
+0 & 0 & 0 & 0 & X_2 & Y_2 & Z_2 & 1 & -v_2X_2 & -v_2Y_2 & -v_2Z_2 \\
 \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-X_n & X_n & X_n & 1 & 0 & 0 & 0 & 0 & -u_nX_n & -u_nY_n & -u_nZ_n \\
-0 & 0 & 0 & 0 & X_n & X_n & X_n & 1 & -u_nX_n & -u_nY_n & -u_nZ_n 
+X_n & Y_n & Z_n & 1 & 0 & 0 & 0 & 0 & -u_nX_n & -u_nY_n & -u_nZ_n \\
+0 & 0 & 0 & 0 & X_n & Y_n & Z_n & 1 & -u_nX_n & -u_nY_n & -u_nZ_n 
 \end{bmatrix}
 \begin{pmatrix}m_{11} \\ m_{12} \\ m_{13} \\ m_{14} \\ m_{21} \\ m_{22} \\ m_{23} \\ m_{24} \\ m_{31} \\ m_{32} \\ m_{33} \\ m_{34} \end{pmatrix} = \begin{pmatrix} u_1 \\ v_1 \\ u_2 \\ v_2 \\ \vdots \\ u_n \\ v_n \end{pmatrix}
 \]
@@ -459,7 +469,7 @@ Vista de pássaro ou \textit{bird's eye view} consiste na visualização de um o
 		\label{fig:birds2}
 	\end{subfigure}
 	\label{fig:image7}
-	\legend{Fonte: \citeauthor{Bradski2008}}
+	\legend{Fonte: \cite{Bradski2008}}
 \end{figure}
 
 
@@ -468,7 +478,7 @@ Apesar de não ter utilizado essa terminologia, o processo de calibração de c�
 
 \section{Espaços de cores}
 
-Cor é o resultado da percepção da luz que incide na retina em células foto-receptoras, conhecidas como cones. De acordo com \citen{Shapiro2001}, a percepção de cor depende, além das características físicas da luz, de um processamento complexo pelo olho e cérebro que integra as propriedades do estímulo com a sensibilidade do observador.
+Cor é o resultado da percepção da luz que incide na retina em células fotorreceptoras, conhecidas como cones. De acordo com \citen{Shapiro2001}, a percepção de cor depende, além das características físicas da luz, de um processamento complexo pelo olho e cérebro que integra as propriedades do estímulo com a sensibilidade do observador.
 
 \citen{Feitosa-Santana2006}, relatou que existem registros de estudos para encontrar uma maneira de se organizar as cores desde a antiguidade. Dentre os primeiros registros de espaço de cores, pode-se destacar  o trabalho de Pitágoras (circa 570-500 a.C.), que criou um espaço de cores semicircular relacionando as notas da escala musical de tons e meio tons aos planetas que, por sua vez, eram representados por determinadas cores, como pode ser visto na figura~\ref{fig:pit}.
 
@@ -550,7 +560,7 @@ d_{chi-quad}(H_1,H_2) =  \sum _I  \frac{\left(H_1(I)-H_2(I)\right)^2}{H_1(I)}
 d_{intersec}(H_1,H_2) =  \sum _I  \min (H_1(I), H_2(I))
 \]
 
-No caso da correlação, quanto maior o valor encontrado, maior a similaridade entre as duas imagens, elas forem iguais, o resultado será 1, assim como na intersecção, valores menores do que 1 indicam diferenças na imagem. Para chi-quadrado, teremos no caso de imagens idênticas 0 e valores maiores que esse indicam que existem diferenças entre elas. Na documentação do OpenCV encontramos um exemplo que demonstra os valores encontrados na comparação de histogramas, utilizando as figuras~\ref{fig:hist_0}, ~\ref{fig:hist_1} e ~\ref{fig:hist_2}, o resultado obtido está disposto na tabela~\ref{tbl:hist}.
+No caso da correlação, quanto maior o valor encontrado, maior a similaridade entre as duas imagens, elas forem iguais, o resultado será 1, assim como na intersecção, valores menores do que 1 indicam diferenças na imagem. Para chi-quadrado, teremos no caso de imagens idênticas 0 e valores maiores do que esse indicam que existem diferenças entre elas. Na documentação do OpenCV encontramos um exemplo que demonstra os valores encontrados na comparação de histogramas, utilizando as figuras~\ref{fig:hist_0}, ~\ref{fig:hist_1} e ~\ref{fig:hist_2}, o resultado obtido está disposto na tabela~\ref{tbl:hist}.
 
 \begin{figure}[h]
 	\centering
@@ -605,7 +615,7 @@ Classificadores Haar (\textit{Haar Classifiers}), é um framework de detecção 
 	\caption{Exemplos de perfis Haar}
 	\includegraphics{../../../Dropbox/__TG1/_images/haar}
 	\label{fig:haar}
-	\legend{Fonte: \citeauthor{Viola2004}}
+	\legend{Fonte: \cite{Viola2004}}
 \end{figure}
 
 O valor de um perfil Haar é dado pela soma dos pixeis da(s) área(s) sombreada(s), subtraído da soma dos pixeis da(s) área(s) branca(s). Considerando que
@@ -660,16 +670,16 @@ Ao analisar a função, verificamos que existe um limiar (\textit{threshold}) a 
 		\label{fig:bgs4}
 	\end{subfigure}
 	\label{fig:imagebgs}
-	\legend{Fonte: \citeauthor{Piccardi2004}}
+	\legend{Fonte: \cite{Piccardi2004}}
 \end{figure}
 
 Atualmente contamos com dezenas de métodos disponíveis para executar o processo de subtração de fundo, que podem ser divididos em diversos grupos em função dos algoritmos utilizados:
 \begin{itemize}
-\item básicos: baseados em média e variância ao longo do tempo;
-\item lógica fuzzy;
-\item gaussianas simples;
-\item múltiplas gaussianas
-\item entre outros...
+\item Básicos: baseados em média e variância ao longo do tempo;
+\item Lógica fuzzy;
+\item Gaussianas simples;
+\item Múltiplas gaussianas
+\item Entre outros...
 \end{itemize}
 
 
@@ -693,7 +703,7 @@ Um modelo de mistura de gaussianas, ou (\textit{GMM - Gaussian Mixture Model}) �
 
 A implementação usada nesse caso foi a proposta por \citen{Zivkovic2004} que, junto da implementação de \citen{KaewTraKulPong2002}, foi implementada na biblioteca OpenCV. O modelo proposto, parte do pressuposto que, na prática, em uma cena externa, a iluminação se altera lentamente (normalmente por condições de tempo) e em uma cena interna, de uma maneira rápida (ligar ou desligar uma lâmpada). Um novo objeto pode ser inserido em uma cena, ou removido dela. Em função disso, é necessário que exista um treinamento do modelo de plano de fundo para que haja uma adaptação às alterações do mesmo, adicionando novas amostras ou removendo antigas. Em função disso, o algoritmo propõe que, para cada alteração de uma amostra, o valor do plano de fundo seja novamente estimado, para que seja identificada a introdução de um novo objeto no primeiro plano ou a absorção pelo plano de fundo.
 
-\section{Trabalhos Relacionados}
+%\section{Trabalhos Relacionados}
 
 \chapter{A Técnica Proposta}
 
@@ -765,7 +775,7 @@ O dispositivo óptico utilizado no projeto foi uma Raspberry Pi NoIR camera (fig
 
 No quesito software, o ambiente preparado executava Raspbian GNU/Linux e o projeto foi desenvolvido em C++ e Python, fazendo uso da biblioteca para visão computacional OpenCV.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\caption{Protótipo utilizado}
 	\includegraphics[width=1.0\textwidth]{../../../Dropbox/__TG1/_images/setup}
@@ -775,7 +785,17 @@ No quesito software, o ambiente preparado executava Raspbian GNU/Linux e o proje
 
 \section{Preparação do sistema}
 
-O processo de validação do sistema segue uma ordem semelhante à disposta nesse trabalho, primeiramente foi obtida a matriz de calibração da câmera e os coeficientes de distorção, por meio do uso de um padrão de calibração, conforme disposto na seção ~\ref{calibpat}. Após isso, foi estimada a transformação necessária para obtermos a vista de pássaro, conforme a seção ~\ref{birds}, essa transformação, apesar de não necessária, facilitaria bastante nesse trabalho, pois as vagas de estacionamento passariam a ser retangulares, facilitando bastante a manipulação de seus valores, o resultado pode ser visto na comparação entre as figuras ~\ref{fig:esta0} e ~\ref{fig:esta1}.
+O processo de validação do sistema segue uma ordem semelhante à disposta nesse trabalho: primeiramente foi obtida a matriz de calibração da câmera e os coeficientes de distorção, por meio do uso de um padrão de calibração, conforme disposto na seção ~\ref{calibpat}. O padrão utilizado foi um tabuleiro de xadrez com dimensões de $ 9 \times 6 $, como pode ser visto na figura~\ref{fig:calib2}, que foi uma das imagens utilizadas na calibração da câmera.
+
+\begin{figure}[h]
+	\centering
+	\caption{Imagem do conjunto de calibração da câmera}
+	\includegraphics[width=0.8\textwidth]{../../../Dropbox/__TG1/_images/calib2}
+	\label{fig:calib2}
+	\legend{Fonte: O Autor}
+\end{figure}
+
+Após isso, foi estimada a transformação necessária para obtermos a vista de pássaro, conforme a seção ~\ref{birds}, embora essa transformação não seja necessária, ela facilitaria bastante nesse trabalho, pois as vagas de estacionamento passariam a ser retangulares, facilitando bastante a manipulação de seus valores, o resultado pode ser visto na comparação entre as figuras ~\ref{fig:frame1} e ~\ref{fig:frame2}.
 
 \begin{figure}
 	\centering
@@ -803,29 +823,31 @@ O processo de validação do sistema segue uma ordem semelhante à disposta ness
 
 
 
-Após termos a visão de pássaro, são delimitadas as regiões de interesse (ROIs) de cada vaga a ser avaliada. Por conveniência, essas regiões foram delimitadas como retângulos de 20 por 20 pixeis, marcados manualmente em torno do mouse quando efetuado o clique do botão direito. Após essa etapa, é gerado um arquivo xml contendo as dimensões da vaga em questão do referido estacionamento. 
+Após termos a visão de pássaro, são delimitadas as regiões de interesse (ROIs) de cada vaga a ser avaliada. Por conveniência, essas regiões foram delimitadas como retângulos de 40 por 40 pixeis, sendo que as vagas são regiões retangulares de cerca de 75 por 55 pixeis. Foi optado por não utilizar todo o espaço da vaga para evitar que pedaços do chão façam parte do histograma, que aumentaria a incerteza no momento da decisão, esse valor foi escolhido observando-se a ocupação média dos veículos, de modo que todos os cenários observados fossem cobertos.
+
+Uma vez que as regiões são demarcadas, suas coordenadas são armazenadas em disco para possibilitar sua recuperação.
 
 \section{Proposta Original}
 
-A primeira proposta de implementação era baseada na metodologia executada por \citen{Oliveira2008}, com a detecção dos veículos com o uso de classificadores Haar, Conforme discutido na seção~\ref{haar}, a eficiência desse tipo de classificadores depende diretamente da qualidade do conjunto de treinamento, e a criação de um novo é consideravelmente trabalhosa, em localizar as amostras e computacionalmente custosa ao gerar o conjunto de treinamento, geralmente se emprega o uso de um cluster no processo de computação de um conjunto de treinamento Haar.
+A primeira proposta de implementação era baseada na metodologia executada por \citen{Oliveira2008}, com a detecção dos veículos com o uso de classificadores Haar. Conforme discutido na seção~\ref{haar}, a eficiência desse tipo de classificadores depende diretamente da qualidade do conjunto de treinamento, e a criação de um novo é consideravelmente trabalhosa, em localizar as amostras e computacionalmente custosa ao gerar o conjunto de treinamento, geralmente se emprega o uso de um cluster no processo de computação de um conjunto de treinamento Haar.
 
 Nessa etapa foi utilizado o \textit{haar-cascade} \textbf{cars3.xml} que foi treinado utilizando 526 imagens de carros, com 360x240 pixeis cada, sem escala, essas imagens foram extraídas de um conjunto de dados proposto por Brad Philip and Paul Updike, com imagens obtidas no sul da Califórnia \cite{Oliveira2008}.
 
 Contudo, o conjunto de treinamento não se mostrou eficiente: de fato, as condições em que foram coletadas as imagens eram consideravelmente diferentes das que essa solução estará submetida. Portanto, dada a carga computacional necessária para se gerar conjunto de treinamento personalizado que estivesse de acordo com as imagens obtidas nesse projeto, essa proposta foi relegada.
 
-Ainda nas propostas inseridas no Trabalho de Graduação 1 (Anexo~\ref{tg1}), foi considerado o uso de subtração de plano de fundo, pois, no tocante de definir a alteração da situação de uma das vagas em questão, poderia ser avaliado por meio de alterações no primeiro plano numa região delimitada e marcada como uma vaga. Nesse estudo foram utilizados métodos básicos, como diferença entre quadros, que, apesar de serem computacionalmente eficientes não retornam resultados relevantes e Mistura de Gaussianas, de acordo com o proposto por \citen{Zivkovic2004}. No caso da Mistura de Gaussianas o resultado foi significativamente superior, contudo, onerando a carga computacional.
+Ainda nas propostas inseridas no Trabalho de Graduação 1 (Anexo~\ref{tg1}), foi considerado o uso de subtração de plano de fundo, pois, no tocante de definir a alteração da situação de uma das vagas em questão, poderia ser avaliado por meio de alterações no primeiro plano numa região delimitada e marcada como uma vaga. Nesse estudo foram utilizados métodos básicos, como diferença entre quadros, que, apesar de serem computacionalmente eficientes não retornam resultados relevantes, e Mistura de Gaussianas, de acordo com o proposto por \citen{Zivkovic2004}. No caso da Mistura de Gaussianas o resultado foi significativamente superior, contudo, onerando a carga computacional.
 
 Outro ponto que pesava na utilização de subtração de fundo é que seriam detectadas somente alterações na situação de uma vaga, ou seja, em se pensando de um produto, seria necessário conhecer seu estado inicial. Devido a essa necessidade de se ter a situação inicial do estacionamento, concluiu-se que essa solução, por sí só não seria suficiente, contudo, também não deveria ser descartada.
 
-Analisando, então, a proposta original contida no Trabalho de Graduação 1, vemos que ela, por sí só, não é suficiente para a detecção de vagas de estacionamento, principalmente pela necessidade do conhecimento da situação inicial, em razão disso se fez necessária uma nova proposta de solução.
+Analisando, então, a proposta original contida no Trabalho de Graduação 1, vemos que ela, por si só, não é suficiente para a detecção de vagas de estacionamento, principalmente pela necessidade do conhecimento da situação inicial, em razão disso se fez necessária uma nova proposta de solução.
 
 \section{Segunda Implementação}
 
-Uma vez avaliada a insuficiência técnica da proposta inicial, foi preciso efetuar uma nova avaliação do problema, partindo de um novo pressuposto: identificar a presença de um automóvel em uma determinada região de pixeis, em um determinado instante de tempo, com a maior confiabilidade possível. O problema em sí é simples, contudo, sua solução passa por identificar padrões no estacionamento que permitissem essa detecção.
+Uma vez avaliada a insuficiência técnica da proposta inicial, foi preciso efetuar uma nova avaliação do problema, partindo de um novo pressuposto: identificar a presença de um automóvel em uma determinada região de pixeis, em um determinado instante de tempo, com a maior confiabilidade possível. O problema em si é simples, contudo, sua solução passa por identificar padrões no estacionamento que permitissem essa detecção.
 
 Uma solução para o problema em questão foi proposta em \citen{True2007}, que utiliza um sisema de detecção de ocupação de vagas de estacionamento por meio de imagens estáticas. Nessa solução a identificação da ocupação das vagas de estacionamento é feita basicamente por meio da comparação de histograma dos canais de crominância (a* e b*) do espaço de cores CIELAB entre a região de interesse que é delimitada por uma vaga e um espaço sabidamente desocupado. Nessa proposta, True utilizou mecanismos de aprendizado de máquina para aumentar a confiabilidade dos resultados, além da detecção de \textit{features} nessas regiões.
 
-Partiu-se então no processo de \textbf{detecção de vagas por análise estática}, esta etapa consiste de se identificar a ocupação de vagas pré-delimitadas por meio de uma análise de um determinado quadro ($ frame(n) $). Nesse momento, busca se identificar de maneira consistente se uma vaga está ocupada ou disponível.
+Partiu-se então no processo de \textbf{detecção de vagas por análise de um quadro}, esta etapa consiste de se identificar a ocupação de vagas pré-delimitadas por meio de uma análise de um determinado quadro ($ frame(n) $). Nesse momento, busca se identificar de maneira consistente se uma vaga está ocupada ou disponível.
 
 O processamento a ser executado consiste de sete etapas, cujo fluxograma de execução pode ser visto na figura~\ref{fig:fluxo}:
 \begin{enumerate}
@@ -860,9 +882,22 @@ A partir do sistema instrumentado, iniciou-se o desenvolvimento do mecanismo de 
 
 \subsection{Comparação de Histogramas}
 
-Conforme disposto na seção ~\ref{ch:hist}, comparação de histogramas é um método bastante eficiente de se detectar similaridade entre imagens. Portanto, tendo um espaço aonde sabidamente possuímos o chão, podemos verificar sua similaridade com cada uma das vagas delimitadas. Conforme proposto por \citen{True2007}, a comparação foi feita utilizando os canais de crominância (a*b*) do modelo de cores CIELAB. Cada histograma foi gerado com $ 16 \times 16 $ classes (\textit{bins}), ou seja, com 256 classes.
+Conforme disposto na seção ~\ref{ch:hist}, comparação de histogramas é um método bastante eficiente de se detectar similaridade entre imagens. Portanto, tendo um espaço aonde sabidamente possuímos o chão, podemos verificar sua similaridade com cada uma das vagas delimitadas. Conforme proposto por \citen{True2007}, a comparação foi feita utilizando os canais de crominância (a*b*) do modelo de cores CIELAB. Cada 
+histograma foi gerado com $ 16 \times 16 $ classes (\textit{bins}), ou seja, com 256 classes.
+
+A partir da figura~\ref{fig:frame3}, foram delimitadas áreas que correspondem a vagas e algumas áreas de piso, conforme pode ser verificado na figura~\ref{fig:framemark}. Nessa imagem foram selecionados três segmentos para carros, em ciano, e três para asfalto, em vermelho, mapeados, posteriormente para as figuras ~\ref{fig:histcar} e~\ref{fig:histasf}, respectivamente.
+
+Para cada segmento selecionado, foi efetuada a conversão para CIE L*a*b*, para facilitar o descarte da luminância e, a partir dos canais a* e b* foi gerado o histograma que está plotado no gráfico de dispersão, representado pelas figuras ~\ref{fig:histcar}c e~\ref{fig:histasf}c. Aonde a componente horizontal corresponde ao canal a*, indo de verde para vermelho (esquerda para a direita) e vertical o canal b*, indo de amarelo para azul (baixo para cima).
 
 \begin{figure}
+	\centering
+	\caption{Figura~\ref{fig:frame3} com os patches selecionados}
+	\includegraphics[width=1.0\textwidth]{../../../Dropbox/__TG1/_images/frame_step3m}
+	\label{fig:framemark}
+	\legend{Fonte: O Autor}
+\end{figure}
+
+\begin{figure}[h]
 	\centering
 	\caption{Sequência para cálculo de histograma: Carros}
 	\begin{subfigure}[b]{0.3\textwidth}
@@ -916,7 +951,7 @@ Conforme disposto na seção ~\ref{ch:hist}, comparação de histogramas é um m
 	\legend{Fonte: O Autor}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\caption{Sequência para cálculo de histograma: Piso}
 	\begin{subfigure}[b]{0.3\textwidth}
@@ -970,27 +1005,159 @@ Conforme disposto na seção ~\ref{ch:hist}, comparação de histogramas é um m
 	\legend{Fonte: O Autor}
 \end{figure}
 
-A partir da figura~\ref{fig:frame3}, foram delimitadas áreas que correspondem a vagas e algumas áreas de piso, para serem comparadas posteriormente, a cada novo frame. Para avaliar a viabilidade técnica dessa proposta, foram feitas análises gráficas e numéricas dos histogramas obtidos para cada caso: carros e asfalto, que podem ser visto nas figuras~\ref{fig:histcar} e~\ref{fig:histasf}. Nessa sequência de imagens podemos verificar em (a) segmentos da figura~\ref{fig:frame3}, sem nenhum tratamento. Esta imagem foi convertida para L*a*b, para facilitar o descarte da luminância e, a partir dos canais a* e b* foi gerado o histograma que está plotado no gráfico de dispersão, aonde a componente horizontal corresponde ao canal a*, indo de verde para vermelho (esquerda para a direita) e vertical o canal b*, indo de amarelo para azul (baixo para cima).
+Tendo disponíveis os histogramas de regiões conhecidas de asfalto e de outras que são delimitadas por vagas de estacionamento, é possível calcular a distância entre os dois histogramas e, conforme a diferença entre eles, determinar se a vaga está ocupada ou não em determinado instante. Considerando que o número de classes do histograma já foi previamente definido, fica necessário apenas determinar qual o método de cálculo da distância entre os dois histogramas que será usado, bem como o limiar que irá definir se uma vaga está ocupada ou não.
 
-Tendo disponíveis os histogramas de regiões conhecidas de asfalto e de outras que são delimitadas por vagas de estacionamento, é possível calcular a distância entre os dois histogramas e, conforme a diferença entre eles, determinar se a vaga está ocupada ou não em determinado instante. Considerando que o número de classes do histograma já foi previamente definido, fica necessário, apenas, determinar qual o método de cálculo da distância entre os dois histogramas que será usado, bem como o limiar que irá definir se uma vaga está ocupada ou não.
+O método de comparação de histogramas é um dos pontos de maior liberdade no escopo deste projeto, todos os métodos podem ser utilizados sem problema, contudo, alguns possuem características que facilitam o mecanismo de tomada de decisão. De acordo com o discutido na seção~\ref{ch:hist}, dos três métodos, dois deles possuem o valor mais alto para o caso de imagens idênticas: \textbf{correlação} e \textbf{intersecção}.
 
-O método de comparação de histogramas é um dos pontos de maior liberdade no escopo deste projeto, todos os métodos podem ser utilizados sem problema, contudo, alguns possuem características que facilitam o mecanismo de tomada de decisão. De acordo com o discutido na seção~\ref{ch:hist}, dos três métodos, dois deles possuem o valor mais alto para o caso de imagens idênticas: \textbf{correlação} e \textbf{intersecção}. \citen{Lee2005} avaliaram o desempenho do uso de intersecção de histogramas em L*a*b*, seus resultados foram consistentes e a metodologia aplicada se encaixa bem com a situação em questão, por isso, esse será o método adotado na comparação de histogramas.
+Avaliando o comportamento dos métodos de comparação de histogramas, foi verificado que a \textbf{correlação} é o mais adequado, devido ao fato de uma combinação perfeita, isto é, dois histogramas iguais, sempre retornar o mesmo valor, independentemente do histograma em questão, o que não aconteceria com a intersecção.
 
-\chapter{Resultados Obtidos}
+\chapter{Resultados}
 
-\section{Dificuldades encontradas}
+A metodologia de avaliação do algoritmo proposto foi feita utilizando-se o sistema descrito na figura~\ref{fig:class}, a partir de vagas de $ 40px \times 40px $. Cada uma dessas vagas foi comparada a uma região conhecida de piso, também de $ 40px \times 40px $. A seleção e o cálculo dos histogramas era feito a cada quadro, fazendo com que as regiões estivesse sob condições de iluminação semelhantes.
+
+A partir do décimo quadro, era feita a demarcação das vagas ocupadas e sua corretude era determinada visualmente, em seguida eram passados cem quadros e uma nova análise feita. Vagas oclusas foram excluídas dessa análise por não estarem no escopo deste trabalho.
+
+Em todos os testes foi utilizada a comparação de histogramas por correlação, com confiança de 80\%, portanto:
+\begin{equation}
+Status_{vaga}=\begin{cases}
+livre, & \text{se $ D(vaga,patch) > 0,8 $}.\\
+ocupado, & \text{senão}.
+\end{cases}
+\end{equation}
+
+Os parâmetros variados foram, principalmente, a iluminação e a ocupação do estacionamento, como a confiança é alta, vemos que o sistema tem uma tendência maior a gerar falsos-negativos do que falsos-positivos.
+
+Para cada cenário será exibida uma imagem ilustrativa, gerada a partir de um quadro do respectivo cenário, cujos dados foram utilizados na aferição dos resultados. Nesta imagem, um retângulo verde indica uma vaga detectada como disponível, um vermelho uma vaga detectada como ocupada e o retângulo branco indica a região usada para comparação.
+
+\section{Primeiro Cenário: dia, alta ocupação}
+
+Esse cenário foi definido num dia útil, por durante a tarde, tempo limpo. Nesse dia a região de interesse estava toda ocupada. Um quadro de exemplo está sendo mostrado na figura~\ref{fig:cen1} e os resultados estão dispostos na tabela~\ref{tbl:cen1}
+
+\begin{figure}
+	\centering
+	\caption{Visualização do Primeiro Cenário}
+	\includegraphics[width=1.0\textwidth]{../../../Dropbox/__TG1/_images/cen1}
+	\label{fig:cen1}
+	\legend{Fonte: O Autor}
+\end{figure}
+
+\begin{table}
+	\caption{Resultados Primeiro Cenário}
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c}
+			\textit{Quadro}  &   \textit{Total de Vagas}  &   \textit{Acertos} & \textit{Erros} & \textit{\% acertos} \\
+			\hline
+			\hline
+			10 & 49 & 40 & 9 & 81,63 \\
+			\hline
+			110 & 49 & 42 & 7 &  85,71 \\
+			\hline
+			210 & 49 & 4 & 81 & 83,67 \\
+			\hline
+			310 & 49 & 40 & 9 & 81,63 \\
+			\hline
+			410 & 49 & 42 & 7& 85,71 \\
+			\hline
+			510 & 49 & 43 & 6 & 87,76 \\
+			\hline
+			610 & 49 & 43 & 6 & 87,76 \\
+			\hline
+			710 & 49 & 43 & 6 & 87,76 \\
+			\hline
+			810 & 49 & 40 & 9 & 81,63 \\
+			\hline
+			Média & 49 & 41,56 & 7,44 & 84,81 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\legend{Fonte: O Autor}
+	\label{tbl:cen1}
+\end{table}
+
+
+\section{Segundo Cenário: dia, baixa ocupação}
+
+Esta aferição foi executada em um dia nublado, porém claro, no meio da tarde. Foi um final de semana, o estacionamento estava com baixa ocupação, essa situação está ilustrada na figura~\ref{fig:cen2} e os dados estão planificados na tabela~\ref{tbl:cen2}.
+
+\begin{figure}
+	\centering
+	\caption{Visualização do Segundo Cenário}
+	\includegraphics[width=1.0\textwidth]{../../../Dropbox/__TG1/_images/cen2}
+	\label{fig:cen2}
+	\legend{Fonte: O Autor}
+\end{figure}
+
+\begin{table}
+	\caption{Resultados Segundo Cenário}
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c}
+			\textit{Quadro}  &   \textit{Total de Vagas}  &   \textit{Acertos} & \textit{Erros} & \textit{\% acertos} \\
+			\hline
+			\hline
+			10 & 49 & 34 & 15 & 69,39 \\
+			\hline
+			110 & 49 & 35 & 14 &  71,43 \\
+			\hline
+			210 & 49 & 36 & 13 & 73,47 \\
+			\hline
+			310 & 49 & 40 & 9 & 81,63 \\
+			\hline
+			410 & 49 & 34 & 15 & 69,39 \\
+			\hline
+			510 & 49 & 34 & 15 & 69,39 \\
+			\hline
+			610 & 49 & 37 & 12 & 75,51 \\
+			\hline
+			710 & 49 & 31 & 18 & 63,23\\
+			\hline
+			810 & 49 & 35 & 14 & 71,43 \\
+			\hline
+			Média & 49 & 35,11 & 13,89 & 71,66 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\legend{Fonte: O Autor}
+	\label{tbl:cen2}
+\end{table}
+
+
+
+\section{Terceiro Cenário: noite, baixa ocupação}
+
+Essas imagens foram capturadas a noite, o estacionamento estava praticamente vazio, conforme mostrado na figura~\ref{fig:cen3}. Como podemos perceber, nessa imagem inclusive é difícil determinar visualmente quais são as vagas disponíveis. Além disso, dada a baixa ocupação, não é um bom cenário para validar a taxa de acerto do algoritmo.
+
+\begin{figure}
+	\centering
+	\caption{Visualização do Terceiro Cenário}
+	\includegraphics[width=1.0\textwidth]{../../../Dropbox/__TG1/_images/cen3}
+	\label{fig:cen3}
+	\legend{Fonte: O Autor}
+\end{figure}
+
 
 \chapter{Conclusões}
 
-\chapter{Trabalhos Futuros}
+Analisando os resultados obtidos em cada cenário, fica claro que a solução por si só não é suficiente para efetuar a identificação com confiança da ocupação de vagas de estacionamento. No melhor caso, tivemos pouco mais de 82\% de acerto.
+
+Outro ponto curioso é que a câmera do Raspberry Pi possui uma baixa capacidade de cores. Embora isso fosse esperado, pois esta câmera não possui filtro infravermelho, não era esperado que isso reduzisse tão drasticamente o espalhamento espectral de um objeto colorido, como pode ser visto na figura~\ref{fig:histcar}.
+
+Foram efetuados alguns testes para tentar aumentar a taxa de acerto, como redução do valor de confiança para definir a ocupação de uma vaga e, ainda, foi adicionada inércia na alteração do estado de uma vaga, isso é, para o estado mudar, é necessário que ele permaneça estável por um número determinado de quadros. Contudo, ambas estratégias se mostraram pouco suficientes na melhoria da confiabilidade dos resultados.
+
+Outra possibilidade é adicionar algoritmos de aprendizado de máquina para definir a ocupação ou não, ao invés de uma simples comparação de histogramas, como, por exemplo, \textit{k-Nearest-Neighbor} ou \textit{support vector machines}.
+
+Logo, concluímos que o algoritmo proposto não oferece a confiabilidade necessária a um sistema real, contudo, pode ser utilizado como parte de uma solução maior para atingir tal objetivo.
+
+%\chapter{Trabalhos Futuros}
 
 \nocite{Sobral2014}
 \nocite{6264659}
 \nocite{KaewTraKulPong2002}
 \nocite{BinZabawi2013}
 \nocite{Lin2006}
+\nocite{Brainard2003}
 \bibliographystyle{abntex2-alf}
 \bibliography{export}
+
 
 \annex
 \chapter{Autorização para Obtenção de Imagens}
